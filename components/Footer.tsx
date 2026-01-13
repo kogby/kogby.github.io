@@ -12,7 +12,7 @@ export default function Footer() {
 					<a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="hover:text-black transition-colors">
 						LinkedIn
 					</a>
-					<a href="mailto:hello@example.com" className="hover:text-black transition-colors">
+					<a href="mailto:chen.jerry.cj@gmail.com" className="hover:text-black transition-colors">
 						Email
 					</a>
 				</div>

@@ -69,27 +69,25 @@ export default function Experience() {
 									</div>
 
 									<div className="hidden md:flex justify-center">
-										<div className="w-12 h-12 relative bg-white rounded-full border border-gray-100 p-2 shadow-sm overflow-hidden flex items-center justify-center">
-											{/* eslint-disable-next-line @next/next/no-img-element */}
+										{/* <div className="w-12 h-12 relative bg-white rounded-full border border-gray-100 p-2 shadow-sm overflow-hidden flex items-center justify-center">
 											<img
 												src={exp.logoUrl}
 												alt={`${exp.company} logo`}
 												className="w-full h-full object-contain"
 											/>
-										</div>
+										</div> */}
 									</div>
 
 									<div className="space-y-2 relative">
 										{/* Mobile Logo View */}
 										<div className="md:hidden flex items-center gap-3 mb-2">
-											<div className="w-10 h-10 relative bg-white rounded-full border border-gray-100 p-1.5 shadow-sm overflow-hidden flex items-center justify-center">
-												{/* eslint-disable-next-line @next/next/no-img-element */}
+											{/* <div className="w-10 h-10 relative bg-white rounded-full border border-gray-100 p-1.5 shadow-sm overflow-hidden flex items-center justify-center">
 												<img
 													src={exp.logoUrl}
 													alt={`${exp.company} logo`}
 													className="w-full h-full object-contain"
 												/>
-											</div>
+											</div> */}
 											<h3 className="text-lg font-semibold">{exp.role}</h3>
 										</div>
 

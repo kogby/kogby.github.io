@@ -10,10 +10,10 @@ export default function Contact() {
 				</p>
 
 				<a
-					href="mailto:hello@kogby.dev"
+					href="mailto:chen.jerry.cj@gmail.com"
 					className="text-3xl md:text-5xl font-bold hover:text-blue-700 transition-colors tracking-tight underline decoration-gray-200 underline-offset-8 hover:decoration-blue-700"
 				>
-					hello@kogby.dev
+					chen.jerry.cj@gmail.com
 				</a>
 			</Container>
 		</section>
