@@ -6,7 +6,7 @@ import Container from "./ui/Container";
 import { experiences } from "@/lib/data";
 
 export default function Experience() {
-	const [activeTab, setActiveTab] = useState<"Work" | "Research">("Work");
+	const [activeTab, setActiveTab] = useState<"Work" | "Research" | "Leadership">("Work");
 
 	const filteredExperiences = experiences.filter(
 		(exp) => exp.category === activeTab
@@ -26,10 +26,10 @@ export default function Experience() {
 					</motion.div>
 
 					<div className="flex bg-gray-100 p-1 rounded-full w-fit">
-						{["Work", "Research"].map((tab) => (
+						{["Work", "Research", "Leadership"].map((tab) => (
 							<button
 								key={tab}
-								onClick={() => setActiveTab(tab as "Work" | "Research")}
+								onClick={() => setActiveTab(tab as "Work" | "Research" | "Leadership")}
 								className={`relative px-6 py-2 rounded-full text-sm font-medium transition-colors ${activeTab === tab ? "text-white" : "text-gray-600 hover:text-gray-900"
 									}`}
 							>
