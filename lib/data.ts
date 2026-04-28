@@ -162,3 +162,16 @@ export const skills = {
   technologies: ["Kubernetes", "Docker", "Kafka", "AWS", "Grafana", "Prometheus", "Spring Boot"],
   ml: ["PyTorch", "TensorFlow", "Spark", "Airflow", "HuggingFace", "MLflow"],
 };
+
+export type LifeListItem = {
+  id: number;
+  text: string;
+  done?: boolean;
+};
+
+export const lifeList: LifeListItem[] = [
+  { id: 1, text: "Watch a League of Legends World game" },
+  { id: 2, text: "Get into one of my dream companies" },
+  { id: 3, text: "Earn 1M (USD)" },
+  { id: 4, text: "Have my own cafeteria" },
+];
