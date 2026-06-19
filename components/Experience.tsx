@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Container from "./ui/Container";
+import { highlightMetrics } from "./ui/Metric";
 import { experiences } from "@/lib/data";
 
 export default function Experience() {
@@ -13,7 +14,7 @@ export default function Experience() {
 	);
 
 	return (
-		<section id="about" className="py-20 border-t border-gray-50">
+		<section id="experience" className="py-20 border-t border-gray-200">
 			<Container>
 				<div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
 					<motion.div
@@ -93,7 +94,19 @@ export default function Experience() {
 
 										<h3 className="hidden md:block text-lg font-semibold">{exp.role}</h3>
 										<p className="text-black font-medium">{exp.company}</p>
-										<p className="text-gray-600 leading-relaxed text-sm">{exp.description}</p>
+
+										{exp.bullets.length > 0 ? (
+											<ul className="mt-2 space-y-1.5">
+												{exp.bullets.slice(0, 3).map((bullet, i) => (
+													<li key={i} className="flex gap-2.5 text-sm text-gray-600 leading-relaxed">
+														<span className="mt-2 h-1 w-1 flex-shrink-0 rounded-full bg-gray-400" />
+														<span>{highlightMetrics(bullet.text)}</span>
+													</li>
+												))}
+											</ul>
+										) : (
+											<p className="text-gray-600 leading-relaxed text-sm">{exp.description}</p>
+										)}
 									</div>
 								</motion.div>
 							))}

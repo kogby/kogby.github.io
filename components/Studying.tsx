@@ -1,10 +1,13 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import Container from "./ui/Container";
 import { studyingNow } from "@/lib/data";
 
 export default function Studying() {
+  const [failed, setFailed] = useState<Record<number, boolean>>({});
+
   return (
     <section id="studying" className="py-20 border-t border-gray-50">
       <Container>
@@ -33,10 +36,12 @@ export default function Studying() {
             >
               {/* Book / Course thumbnail */}
               <div className="w-20 h-28 flex-shrink-0 bg-gray-100 rounded-lg overflow-hidden flex items-center justify-center border border-gray-100">
-                {item.imageUrl ? (
+                {item.imageUrl && !failed[item.id] ? (
                   <img
                     src={item.imageUrl}
                     alt={item.title}
+                    loading="lazy"
+                    onError={() => setFailed((f) => ({ ...f, [item.id]: true }))}
                     className="w-full h-full object-cover"
                   />
                 ) : (

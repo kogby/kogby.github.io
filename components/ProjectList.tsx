@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Container from "./ui/Container";
+import { highlightMetrics } from "./ui/Metric";
 import { projects } from "@/lib/data";
 
 export default function ProjectList() {
@@ -16,7 +17,7 @@ export default function ProjectList() {
 		: projects.filter((p) => p.tags.includes(filter));
 
 	return (
-		<section id="projects" className="py-20 border-t border-gray-50 bg-gray-[50]/50">
+		<section id="projects" className="pt-10 pb-20">
 			<Container>
 				<div className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
 					<motion.div
@@ -77,24 +78,27 @@ export default function ProjectList() {
 									</a>
 								</div>
 
-								<p className="text-gray-600 mb-6 text-sm leading-relaxed">
+								<p className="text-gray-600 mb-4 text-sm leading-relaxed">
 									{project.summary}
 								</p>
 
-								<div className="space-y-4">
-									<div className="flex flex-wrap gap-2">
-										{project.tags.map(tag => (
-											<span key={tag} className="text-xs font-semibold px-2 py-1 bg-gray-50 text-gray-600 rounded">
-												{tag}
-											</span>
+								{project.bullets.length > 0 && (
+									<ul className="mb-6 space-y-1.5">
+										{project.bullets.map((bullet, i) => (
+											<li key={i} className="flex gap-2.5 text-sm text-gray-600 leading-relaxed">
+												<span className="mt-2 h-1 w-1 flex-shrink-0 rounded-full bg-gray-400" />
+												<span>{highlightMetrics(bullet.text)}</span>
+											</li>
 										))}
-									</div>
+									</ul>
+								)}
 
-									<div className="pt-4 border-t border-gray-50">
-										<p className="text-xs font-mono text-gray-500">
-											<span className="font-bold text-black">Metrics:</span> {project.metrics}
-										</p>
-									</div>
+								<div className="flex flex-wrap gap-2">
+									{project.tags.map(tag => (
+										<span key={tag} className="text-xs font-semibold px-2 py-1 bg-gray-50 text-gray-600 rounded">
+											{tag}
+										</span>
+									))}
 								</div>
 							</motion.div>
 						))}

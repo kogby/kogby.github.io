@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 import Container from "./ui/Container";
 import SocialLinks from "./SocialLinks";
 
@@ -13,7 +14,7 @@ export default function Hero() {
 						initial={{ opacity: 0, y: 20 }}
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ duration: 0.5 }}
-						className="text-5xl md:text-7xl font-bold tracking-tight text-primary leading-tight"
+						className="text-5xl md:text-7xl font-bold tracking-tight text-foreground leading-tight"
 					>
 						Turning ambiguity into <br />
 						<motion.span
@@ -67,18 +68,18 @@ export default function Hero() {
 						transition={{ delay: 0.75, duration: 0.5 }}
 						className="pt-8 flex gap-4"
 					>
-						<a
-							href="#projects"
+						<Link
+							href="/projects"
 							className="px-6 py-3 bg-black text-white font-medium rounded-full hover:bg-gray-800 transition-colors hover:scale-105 active:scale-95 duration-200"
 						>
 							View Work
-						</a>
-						<a
-							href="#contact"
+						</Link>
+						<Link
+							href="/contact"
 							className="px-6 py-3 border border-gray-200 text-gray-600 font-medium rounded-full hover:border-black hover:text-black transition-colors hover:scale-105 active:scale-95 duration-200"
 						>
 							Contact Me
-						</a>
+						</Link>
 					</motion.div>
 
 					<SocialLinks />

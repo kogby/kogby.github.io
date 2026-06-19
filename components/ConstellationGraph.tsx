@@ -1,163 +1,179 @@
 "use client";
 
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Container from "./ui/Container";
 import { domains, projectsWithDomains } from "@/lib/data";
 
-function computeLayout(width: number, height: number) {
-  const cx = width / 2;
-  const cy = height / 2;
-  const domainRadius = Math.min(width, height) * 0.28;
+// Mirrors --accent-primary (Midnight Violet) from globals.css.
+const ACCENT = "#4C1D95";
 
-  const domainPositions = domains.map((d, i) => {
-    const angle = (i / domains.length) * Math.PI * 2 - Math.PI / 2;
-    return {
-      ...d,
-      x: cx + domainRadius * Math.cos(angle),
-      y: cy + domainRadius * Math.sin(angle),
-      angle,
-    };
-  });
+// Canvas. Wider than tall leaves room for outer labels without clipping.
+const W = 1000;
+const H = 820;
+const CX = W / 2;
+const CY = H / 2;
+const DOMAIN_R = 190; // inner ring (domains)
+const PROJECT_R = 330; // outer ring (projects)
 
-  return { domainPositions, cx, cy, domainRadius };
-}
+const DEG = Math.PI / 180;
 
-// Compute project positions that fan out from a selected domain
-function computeProjectPositions(
-  domainId: string,
-  domainPositions: ReturnType<typeof computeLayout>["domainPositions"],
-  cx: number,
-  cy: number,
-  domainRadius: number,
-) {
-  const related = projectsWithDomains.filter((p) => p.domains.includes(domainId));
-  const domain = domainPositions.find((d) => d.id === domainId)!;
-  const projectRadius = domainRadius * 1.7;
-  const count = related.length;
-  // Fan spread: total arc that the projects span
-  const fanArc = Math.min(count * 0.32, 1.2); // radians
-
-  return related.map((p, i) => {
-    const offset = count === 1 ? 0 : (i - (count - 1) / 2) * (fanArc / (count - 1));
-    const angle = domain.angle + offset;
-    return {
-      ...p,
-      x: cx + projectRadius * Math.cos(angle),
-      y: cy + projectRadius * Math.sin(angle),
-      angle,
-    };
-  });
-}
-
-// Convert radians to degrees, and flip text if on the left side so it reads L→R
-function labelTransform(x: number, y: number, angle: number, offset: number) {
-  const lx = x + Math.cos(angle) * offset;
-  const ly = y + Math.sin(angle) * offset;
-  let deg = (angle * 180) / Math.PI;
-  let anchor: "start" | "end" = "start";
-  // If label is on the left half, flip 180 so text isn't upside down
-  if (deg > 90 || deg < -90) {
-    deg += 180;
-    anchor = "end";
+// Greedy word-wrap so long project titles render on multiple lines instead of
+// overflowing the viewBox and getting clipped at the canvas edge.
+function wrapLabel(text: string, max: number): string[] {
+  const lines: string[] = [];
+  let cur = "";
+  for (const word of text.split(" ")) {
+    if (!cur) cur = word;
+    else if ((cur + " " + word).length <= max) cur += " " + word;
+    else {
+      lines.push(cur);
+      cur = word;
+    }
   }
-  return { lx, ly, deg, anchor };
+  if (cur) lines.push(cur);
+  return lines;
 }
 
 export default function ConstellationGraph() {
-  const [activeDomain, setActiveDomain] = useState<string | null>(null);
-  const [activeProject, setActiveProject] = useState<number | null>(null);
+  const [selectedDomain, setSelectedDomain] = useState<string | null>(null);
+  const [hoveredDomain, setHoveredDomain] = useState<string | null>(null);
+  const [selectedProject, setSelectedProject] = useState<number | null>(null);
 
-  const width = 1000;
-  const height = 1000;
-
-  const { domainPositions, cx, cy, domainRadius } = useMemo(
-    () => computeLayout(width, height),
+  // ── Inner ring: domains evenly spaced, starting at top ──────────────────
+  const domainPos = useMemo(
+    () =>
+      domains.map((d, i) => {
+        const angle = (i / domains.length) * Math.PI * 2 - Math.PI / 2;
+        return {
+          ...d,
+          angle,
+          x: CX + DOMAIN_R * Math.cos(angle),
+          y: CY + DOMAIN_R * Math.sin(angle),
+        };
+      }),
     []
   );
 
-  const projectPositions = useMemo(() => {
-    if (!activeDomain) return [];
-    return computeProjectPositions(activeDomain, domainPositions, cx, cy, domainRadius);
-  }, [activeDomain, domainPositions, cx, cy, domainRadius]);
+  const domainById = useMemo(() => {
+    const m = new Map<string, (typeof domainPos)[number]>();
+    domainPos.forEach((d) => m.set(d.id, d));
+    return m;
+  }, [domainPos]);
 
-  // Domain-to-domain web edges
-  const domainEdges = useMemo(() => {
-    const result: { x1: number; y1: number; x2: number; y2: number; id1: string; id2: string }[] = [];
-    for (let i = 0; i < domainPositions.length; i++) {
-      for (let j = i + 1; j < domainPositions.length; j++) {
-        result.push({
-          x1: domainPositions[i].x, y1: domainPositions[i].y,
-          x2: domainPositions[j].x, y2: domainPositions[j].y,
-          id1: domainPositions[i].id, id2: domainPositions[j].id,
-        });
-      }
-    }
-    return result;
-  }, [domainPositions]);
-
-  // Decorative rings & radials
-  const rings = [domainRadius * 0.35, domainRadius * 0.65, domainRadius];
-  const radialCount = 18;
-  const radialLines = Array.from({ length: radialCount }, (_, i) => {
-    const angle = (i / radialCount) * Math.PI * 2;
-    return {
-      x1: cx + rings[0] * 0.2 * Math.cos(angle),
-      y1: cy + rings[0] * 0.2 * Math.sin(angle),
-      x2: cx + domainRadius * 1.05 * Math.cos(angle),
-      y2: cy + domainRadius * 1.05 * Math.sin(angle),
-    };
-  });
-
-  // Project-to-domain edges (only when a domain is active)
-  const projectEdges = useMemo(() => {
-    if (!activeDomain) return [];
-    const result: { px: number; py: number; dx: number; dy: number; projectId: number; domainId: string }[] = [];
-    for (const p of projectPositions) {
-      for (const dId of p.domains) {
-        const d = domainPositions.find((dm) => dm.id === dId);
+  // ── Outer ring: each project sits in the average direction of its domains,
+  // so its connecting threads stay short and the cluster reflects real focus.
+  // Projects sharing an identical domain set land on the same angle, so we
+  // fan exact ties apart deterministically (no overlap, no randomness).
+  const projectPos = useMemo(() => {
+    const withIdeal = projectsWithDomains.map((p) => {
+      let sx = 0;
+      let sy = 0;
+      p.domains.forEach((id) => {
+        const d = domainById.get(id);
         if (d) {
-          result.push({ px: p.x, py: p.y, dx: d.x, dy: d.y, projectId: p.id, domainId: dId });
+          sx += Math.cos(d.angle);
+          sy += Math.sin(d.angle);
+        }
+      });
+      const ideal = p.domains.length ? Math.atan2(sy, sx) : -Math.PI / 2;
+      return { p, ideal };
+    });
+
+    const groups = new Map<number, typeof withIdeal>();
+    withIdeal.forEach((w) => {
+      const key = Math.round((w.ideal * 180) / Math.PI);
+      if (!groups.has(key)) groups.set(key, []);
+      groups.get(key)!.push(w);
+    });
+
+    const out: ((typeof projectsWithDomains)[number] & {
+      angle: number;
+      x: number;
+      y: number;
+    })[] = [];
+    groups.forEach((arr) => {
+      const n = arr.length;
+      arr.forEach((w, i) => {
+        const angle = w.ideal + (i - (n - 1) / 2) * 15 * DEG;
+        out.push({
+          ...w.p,
+          angle,
+          x: CX + PROJECT_R * Math.cos(angle),
+          y: CY + PROJECT_R * Math.sin(angle),
+        });
+      });
+    });
+    return out;
+  }, [domainById]);
+
+  // ── Project ↔ domain threads (the real connections) ─────────────────────
+  const projEdges = useMemo(() => {
+    const r: {
+      projectId: number;
+      domainId: string;
+      x1: number;
+      y1: number;
+      x2: number;
+      y2: number;
+    }[] = [];
+    projectPos.forEach((p) =>
+      p.domains.forEach((id) => {
+        const d = domainById.get(id);
+        if (d) r.push({ projectId: p.id, domainId: id, x1: p.x, y1: p.y, x2: d.x, y2: d.y });
+      })
+    );
+    return r;
+  }, [projectPos, domainById]);
+
+  // ── Domain ↔ domain edges: only when two domains co-occur in a project ──
+  const domEdges = useMemo(() => {
+    const seen = new Set<string>();
+    const r: { id1: string; id2: string; x1: number; y1: number; x2: number; y2: number }[] = [];
+    projectsWithDomains.forEach((p) => {
+      const ds = p.domains;
+      for (let i = 0; i < ds.length; i++) {
+        for (let j = i + 1; j < ds.length; j++) {
+          const key = [ds[i], ds[j]].sort().join("-");
+          if (seen.has(key)) continue;
+          seen.add(key);
+          const a = domainById.get(ds[i]);
+          const b = domainById.get(ds[j]);
+          if (a && b) r.push({ id1: ds[i], id2: ds[j], x1: a.x, y1: a.y, x2: b.x, y2: b.y });
         }
       }
-    }
-    return result;
-  }, [activeDomain, projectPositions, domainPositions]);
+    });
+    return r;
+  }, [domainById]);
 
-  const isDomainActive = useCallback(
-    (d: { id: string }) => {
-      if (!activeDomain) return true;
-      if (d.id === activeDomain) return true;
-      // Also highlight domains that share projects with active domain
-      if (activeProject !== null) {
-        const proj = projectsWithDomains.find((p) => p.id === activeProject);
-        return proj?.domains.includes(d.id) ?? false;
-      }
-      return false;
-    },
-    [activeDomain, activeProject]
-  );
+  // ── Highlight state. Hover wins over click; both fall back to resting. ──
+  const focusDomain = hoveredDomain ?? selectedDomain;
+  const detail = selectedProject !== null ? projectPos.find((p) => p.id === selectedProject) ?? null : null;
+  const anyActive = focusDomain !== null || selectedProject !== null;
 
-  const selectedProject = activeProject !== null
-    ? projectsWithDomains.find((p) => p.id === activeProject)
-    : null;
+  const edgeLit = (projectId: number, domainId: string) =>
+    (focusDomain !== null && domainId === focusDomain) || selectedProject === projectId;
+  const projectLit = (p: { id: number; domains: string[] }) =>
+    (focusDomain !== null && p.domains.includes(focusDomain)) || selectedProject === p.id;
+  const domainLit = (id: string) =>
+    (focusDomain === null && selectedProject === null) ||
+    id === focusDomain ||
+    (detail?.domains.includes(id) ?? false);
 
-  // Domain label: positioned outward with smart anchor
-  function domainLabelPos(x: number, y: number) {
-    const dx = x - cx;
-    const dy = y - cy;
-    const dist = Math.sqrt(dx * dx + dy * dy) || 1;
-    const lx = x + (dx / dist) * 30;
-    const ly = y + (dy / dist) * 30;
-    const nx = dx / dist;
-    let anchor: "start" | "middle" | "end" = "middle";
-    if (nx > 0.3) anchor = "start";
-    else if (nx < -0.3) anchor = "end";
-    return { lx, ly, anchor };
+  // Horizontal label placed just outside a node; flips side so it never overlaps.
+  function outwardLabel(x: number, y: number, offset: number) {
+    const dx = x - CX;
+    const dy = y - CY;
+    const dist = Math.hypot(dx, dy) || 1;
+    return {
+      lx: x + (dx / dist) * offset,
+      ly: y + (dy / dist) * offset,
+      anchor: (dx > 12 ? "start" : dx < -12 ? "end" : "middle") as "start" | "end" | "middle",
+    };
   }
 
   return (
-    <section id="projects" className="py-20 border-t border-gray-50">
+    <section id="projects-overview" className="pt-10 pb-20">
       <Container>
         <motion.div
           initial={{ opacity: 0, x: -20 }}
@@ -165,21 +181,23 @@ export default function ConstellationGraph() {
           viewport={{ once: true }}
           className="mb-8"
         >
-          <h2 className="text-3xl font-bold tracking-tight mb-4">Projects</h2>
+          <h2 className="text-3xl font-bold tracking-tight mb-4">Project Map</h2>
           <div className="h-1 w-20 bg-black"></div>
-          <p className="text-sm text-gray-500 mt-4">
-            {activeDomain
-              ? "Click a project node for details, or pick another domain."
-              : "Select a domain to explore related projects."}
+          <p className="text-sm text-gray-500 mt-4 max-w-xl">
+            How my work connects across domains. Hover or tap a domain to trace its
+            projects; tap a project node for details.
           </p>
         </motion.div>
 
-        {/* Domain filter pills */}
-        <div className="flex flex-wrap gap-2 mb-8">
+        {/* Domain filter pills — explicit affordance, works on touch */}
+        <div className="flex flex-wrap gap-2 mb-6">
           <button
-            onClick={() => { setActiveDomain(null); setActiveProject(null); }}
+            onClick={() => {
+              setSelectedDomain(null);
+              setSelectedProject(null);
+            }}
             className={`px-4 py-1.5 text-sm font-medium rounded-full transition-all ${
-              !activeDomain
+              !selectedDomain
                 ? "bg-black text-white shadow-md scale-105"
                 : "bg-white text-gray-600 border border-gray-200 hover:border-gray-400"
             }`}
@@ -190,158 +208,114 @@ export default function ConstellationGraph() {
             <button
               key={d.id}
               onClick={() => {
-                setActiveDomain(activeDomain === d.id ? null : d.id);
-                setActiveProject(null);
+                setSelectedDomain(selectedDomain === d.id ? null : d.id);
+                setSelectedProject(null);
               }}
+              onMouseEnter={() => setHoveredDomain(d.id)}
+              onMouseLeave={() => setHoveredDomain(null)}
               className={`px-4 py-1.5 text-sm font-medium rounded-full transition-all ${
-                activeDomain === d.id
-                  ? "bg-black text-white shadow-md scale-105"
+                selectedDomain === d.id
+                  ? "text-white shadow-md scale-105"
                   : "bg-white text-gray-600 border border-gray-200 hover:border-gray-400"
               }`}
+              style={selectedDomain === d.id ? { backgroundColor: ACCENT } : undefined}
             >
               {d.label}
             </button>
           ))}
         </div>
 
-        {/* SVG Dreamcatcher */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
+          initial={{ opacity: 0, scale: 0.96 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="relative w-full max-w-3xl mx-auto"
+          className="relative w-full max-w-4xl mx-auto"
         >
-          <svg viewBox={`0 0 ${width} ${height}`} className="w-full h-auto">
-            <defs>
-              <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-                <feGaussianBlur stdDeviation="6" result="blur" />
-                <feMerge>
-                  <feMergeNode in="blur" />
-                  <feMergeNode in="SourceGraphic" />
-                </feMerge>
-              </filter>
-              <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
-                <feDropShadow dx="0" dy="3" stdDeviation="4" floodOpacity="0.12" />
-              </filter>
-              <radialGradient id="centerGlow" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stopColor="#111" stopOpacity="0.05" />
-                <stop offset="100%" stopColor="#111" stopOpacity="0" />
-              </radialGradient>
-            </defs>
+          <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto overflow-visible" role="img" aria-label="Project domain map">
+            {/* Faint orbit guides */}
+            <circle cx={CX} cy={CY} r={DOMAIN_R} fill="none" stroke="#eee" strokeWidth={0.6} />
+            <circle cx={CX} cy={CY} r={PROJECT_R} fill="none" stroke="#f1f1f1" strokeWidth={0.6} strokeDasharray="3 9" />
 
-            {/* Center glow */}
-            <circle cx={cx} cy={cy} r={domainRadius * 1.3} fill="url(#centerGlow)" />
-
-            {/* Concentric rings */}
-            {rings.map((r, i) => (
-              <circle
-                key={i}
-                cx={cx}
-                cy={cy}
-                r={r}
-                fill="none"
-                stroke="#e0e0e0"
-                strokeWidth={0.6}
-                strokeDasharray={i === 0 ? "2 8" : i === 1 ? "4 10" : "none"}
-                opacity={0.45}
-              />
-            ))}
-
-            {/* Radial threads */}
-            {radialLines.map((line, i) => (
-              <line
-                key={`r-${i}`}
-                x1={line.x1} y1={line.y1}
-                x2={line.x2} y2={line.y2}
-                stroke="#eaeaea"
-                strokeWidth={0.4}
-                opacity={0.35}
-              />
-            ))}
-
-            {/* Center dot */}
-            <circle cx={cx} cy={cy} r={3.5} fill="#ddd" />
-
-            {/* Domain-to-domain web */}
-            {domainEdges.map((e, i) => {
-              const active = !activeDomain || e.id1 === activeDomain || e.id2 === activeDomain;
+            {/* Domain ↔ domain web (real co-occurrence only) */}
+            {domEdges.map((e, i) => {
+              const lit = focusDomain === e.id1 || focusDomain === e.id2;
               return (
                 <line
-                  key={`dw-${i}`}
-                  x1={e.x1} y1={e.y1} x2={e.x2} y2={e.y2}
-                  stroke={active ? "#d0d0d0" : "#f0f0f0"}
-                  strokeWidth={active ? 0.8 : 0.3}
-                  style={{ transition: "all 0.5s ease" }}
+                  key={`de-${i}`}
+                  x1={e.x1}
+                  y1={e.y1}
+                  x2={e.x2}
+                  y2={e.y2}
+                  stroke={lit ? ACCENT : "#d9d9d9"}
+                  strokeWidth={lit ? 1.4 : 0.7}
+                  opacity={anyActive && !lit ? 0.15 : 0.55}
+                  style={{ transition: "all 0.35s ease" }}
                 />
               );
             })}
 
-            {/* Project-to-domain threads (animated in) */}
-            {projectEdges.map((edge, i) => {
-              const isActive = activeProject === null || edge.projectId === activeProject;
+            {/* Project ↔ domain threads — the constellation, visible at rest */}
+            {projEdges.map((e, i) => {
+              const lit = edgeLit(e.projectId, e.domainId);
               return (
-                <motion.line
-                  key={`pe-${edge.projectId}-${edge.domainId}`}
-                  initial={{ pathLength: 0, opacity: 0 }}
-                  animate={{ pathLength: 1, opacity: isActive ? 0.6 : 0.15 }}
-                  transition={{ duration: 0.5, delay: i * 0.05 }}
-                  x1={edge.dx} y1={edge.dy}
-                  x2={edge.px} y2={edge.py}
-                  stroke="#111"
-                  strokeWidth={isActive ? 1.2 : 0.5}
-                  style={{ transition: "opacity 0.3s, stroke-width 0.3s" }}
+                <line
+                  key={`pe-${i}`}
+                  x1={e.x1}
+                  y1={e.y1}
+                  x2={e.x2}
+                  y2={e.y2}
+                  stroke={lit ? ACCENT : "#cfcfcf"}
+                  strokeWidth={lit ? 1.5 : 0.7}
+                  opacity={!anyActive ? 0.3 : lit ? 0.7 : 0.08}
+                  style={{ transition: "all 0.35s ease" }}
                 />
               );
             })}
 
             {/* Domain nodes */}
-            {domainPositions.map((d) => {
-              const active = isDomainActive(d);
-              const isSelected = d.id === activeDomain;
-              const { lx, ly, anchor } = domainLabelPos(d.x, d.y);
+            {domainPos.map((d) => {
+              const lit = domainLit(d.id);
+              const sel = d.id === selectedDomain;
+              const { lx, ly, anchor } = outwardLabel(d.x, d.y, 26);
               return (
                 <g
                   key={d.id}
                   style={{ cursor: "pointer" }}
+                  onMouseEnter={() => setHoveredDomain(d.id)}
+                  onMouseLeave={() => setHoveredDomain(null)}
                   onClick={() => {
-                    setActiveDomain(activeDomain === d.id ? null : d.id);
-                    setActiveProject(null);
+                    setSelectedDomain(selectedDomain === d.id ? null : d.id);
+                    setSelectedProject(null);
                   }}
                 >
-                  {/* Pulse ring when selected */}
-                  {isSelected && (
-                    <circle
-                      cx={d.x} cy={d.y} r={26}
-                      fill="none" stroke="#111" strokeWidth={0.8}
-                      opacity={0.15}
-                    />
-                  )}
                   <circle
-                    cx={d.x} cy={d.y} r={18}
-                    fill={active ? "white" : "#fafafa"}
-                    stroke={isSelected ? "#111" : active ? "#bbb" : "#e0e0e0"}
-                    strokeWidth={isSelected ? 2 : 1}
-                    filter={isSelected ? "url(#shadow)" : undefined}
-                    opacity={active ? 1 : 0.3}
-                    style={{ transition: "all 0.4s ease" }}
+                    cx={d.x}
+                    cy={d.y}
+                    r={15}
+                    fill="white"
+                    stroke={lit ? ACCENT : "#cfcfcf"}
+                    strokeWidth={sel ? 2.5 : lit ? 1.6 : 1}
+                    opacity={lit ? 1 : 0.4}
+                    style={{ transition: "all 0.35s ease" }}
                   />
                   <circle
-                    cx={d.x} cy={d.y} r={3.5}
-                    fill={isSelected ? "#111" : active ? "#888" : "#ccc"}
-                    opacity={active ? 1 : 0.3}
-                    style={{ transition: "all 0.4s ease" }}
+                    cx={d.x}
+                    cy={d.y}
+                    r={4}
+                    fill={lit ? ACCENT : "#bbb"}
+                    opacity={lit ? 1 : 0.4}
+                    style={{ transition: "all 0.35s ease" }}
                   />
                   <text
-                    x={lx} y={ly}
+                    x={lx}
+                    y={ly}
                     textAnchor={anchor}
                     dominantBaseline="central"
-                    fontSize={13}
-                    fontWeight={isSelected ? 700 : 600}
-                    letterSpacing={0.5}
-                    fill={isSelected ? "#111" : active ? "#555" : "#ccc"}
-                    opacity={active ? 1 : 0.35}
-                    style={{ transition: "all 0.4s ease", fontFamily: "var(--font-sans)" }}
+                    fontSize={14}
+                    fontWeight={sel ? 700 : 600}
+                    fill={lit ? "#111" : "#c4c4c4"}
+                    style={{ transition: "fill 0.35s ease", fontFamily: "var(--font-sans)" }}
                   >
                     {d.label}
                   </text>
@@ -349,108 +323,94 @@ export default function ConstellationGraph() {
               );
             })}
 
-            {/* Project nodes — only visible when a domain is selected */}
-            <AnimatePresence>
-              {activeDomain && projectPositions.map((p, i) => {
-                const selected = activeProject === p.id;
-                const dimmed = activeProject !== null && !selected;
-                const { lx, ly, deg, anchor } = labelTransform(p.x, p.y, p.angle, 18);
-
-                return (
-                  <motion.g
-                    key={p.id}
-                    initial={{ opacity: 0, scale: 0 }}
-                    animate={{ opacity: dimmed ? 0.3 : 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0 }}
-                    transition={{ duration: 0.35, delay: i * 0.06, type: "spring", stiffness: 200 }}
-                    style={{ cursor: "pointer", transformOrigin: `${p.x}px ${p.y}px` }}
-                    onClick={() => setActiveProject(activeProject === p.id ? null : p.id)}
-                  >
-                    {/* Selection ring */}
-                    {selected && (
-                      <circle
-                        cx={p.x} cy={p.y} r={18}
-                        fill="none" stroke="#111" strokeWidth={1}
-                        opacity={0.2} filter="url(#glow)"
-                      />
-                    )}
-                    {/* Node */}
-                    <circle
-                      cx={p.x} cy={p.y}
-                      r={selected ? 9 : 6}
-                      fill="#111"
-                      filter={selected ? "url(#glow)" : undefined}
-                    />
-                    {/* Highlight dot */}
-                    <circle
-                      cx={p.x - 1.5} cy={p.y - 1.5}
-                      r={1.5} fill="white" opacity={0.45}
-                    />
-                    {/* Rotated label along radial */}
-                    <text
-                      x={lx} y={ly}
-                      textAnchor={anchor}
-                      dominantBaseline="central"
-                      transform={`rotate(${deg}, ${lx}, ${ly})`}
-                      fontSize={10}
-                      fontWeight={selected ? 600 : 400}
-                      fill={selected ? "#111" : "#555"}
-                      style={{ fontFamily: "var(--font-sans)" }}
-                    >
-                      {p.title}
-                    </text>
-                  </motion.g>
-                );
-              })}
-            </AnimatePresence>
+            {/* Project nodes */}
+            {projectPos.map((p) => {
+              const lit = projectLit(p);
+              const sel = selectedProject === p.id;
+              const { lx, ly, anchor } = outwardLabel(p.x, p.y, 14);
+              return (
+                <g
+                  key={p.id}
+                  style={{ cursor: "pointer" }}
+                  onClick={() => setSelectedProject(selectedProject === p.id ? null : p.id)}
+                >
+                  {sel && <circle cx={p.x} cy={p.y} r={12} fill="none" stroke={ACCENT} strokeWidth={1} opacity={0.4} />}
+                  <circle
+                    cx={p.x}
+                    cy={p.y}
+                    r={sel ? 8 : 6}
+                    fill={lit ? ACCENT : "#9a9a9a"}
+                    opacity={!anyActive ? 0.85 : lit ? 1 : 0.25}
+                    style={{ transition: "all 0.35s ease" }}
+                  />
+                  {(() => {
+                    const lines = wrapLabel(p.title, 18);
+                    const lh = 13;
+                    const y0 = ly - ((lines.length - 1) * lh) / 2;
+                    return (
+                      <text
+                        x={lx}
+                        textAnchor={anchor}
+                        fontSize={11}
+                        fontWeight={sel ? 600 : 400}
+                        fill={lit ? "#111" : "#bdbdbd"}
+                        opacity={!anyActive ? 0.85 : lit ? 1 : 0.3}
+                        style={{ transition: "all 0.35s ease", fontFamily: "var(--font-sans)" }}
+                      >
+                        {lines.map((line, li) => (
+                          <tspan key={li} x={lx} y={y0 + li * lh}>
+                            {line}
+                          </tspan>
+                        ))}
+                      </text>
+                    );
+                  })()}
+                </g>
+              );
+            })}
           </svg>
         </motion.div>
 
         {/* Project detail card */}
         <AnimatePresence mode="wait">
-          {selectedProject && (
+          {detail && (
             <motion.div
-              key={selectedProject.id}
-              initial={{ opacity: 0, y: 20 }}
+              key={detail.id}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 10 }}
+              exit={{ opacity: 0, y: 8 }}
               transition={{ duration: 0.25 }}
-              className="-mt-4 p-6 border border-gray-200 rounded-xl bg-white shadow-sm"
+              className="max-w-2xl mx-auto mt-6 p-6 border border-gray-200 rounded-xl bg-white shadow-sm"
             >
               <div className="flex justify-between items-start mb-3">
-                <h3 className="text-lg font-bold">{selectedProject.title}</h3>
+                <h3 className="text-lg font-bold">{detail.title}</h3>
                 <a
-                  href={selectedProject.link}
+                  href={detail.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-black transition-colors"
+                  aria-label={`Open ${detail.title}`}
+                  className="text-gray-400 hover:text-[#4C1D95] transition-colors"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                   </svg>
                 </a>
               </div>
-              <p className="text-sm text-gray-600 mb-4 leading-relaxed">{selectedProject.description}</p>
+              <p className="text-sm text-gray-600 mb-4 leading-relaxed">{detail.summary}</p>
               <div className="flex flex-wrap gap-2 mb-3">
-                {selectedProject.tags.map((tag) => (
+                {detail.tags.map((tag) => (
                   <span key={tag} className="text-xs font-semibold px-2 py-1 bg-gray-50 text-gray-600 rounded">
                     {tag}
                   </span>
                 ))}
               </div>
-              <div className="flex flex-wrap gap-2 mb-3">
-                {selectedProject.domains.map((dId) => {
-                  const domain = domains.find((dm) => dm.id === dId);
-                  return (
-                    <span key={dId} className="text-xs font-medium px-2 py-1 border border-gray-200 text-gray-500 rounded-full">
-                      {domain?.label}
-                    </span>
-                  );
-                })}
+              <div className="flex flex-wrap gap-2">
+                {detail.domains.map((dId) => (
+                  <span key={dId} className="text-xs font-medium px-2 py-1 border border-gray-200 text-gray-500 rounded-full">
+                    {domainById.get(dId)?.label}
+                  </span>
+                ))}
               </div>
-              <p className="text-xs font-mono text-gray-500">
-                <span className="font-bold text-black">Metrics:</span> {selectedProject.metrics}
-              </p>
             </motion.div>
           )}
         </AnimatePresence>

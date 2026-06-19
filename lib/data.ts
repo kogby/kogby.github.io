@@ -9,6 +9,12 @@ export type Bullet = { text: string; tags: string[]; priority: string };
 export type ExperienceFull = (typeof career.experiences)[number];
 export type ProjectFull = (typeof career.projects)[number];
 
+// Order bullets high-priority first (stable), so components can show the strongest first.
+const byPriority = (bullets: Bullet[]): Bullet[] =>
+  [...bullets].sort(
+    (a, b) => (a.priority === "high" ? 0 : 1) - (b.priority === "high" ? 0 : 1)
+  );
+
 // Rich entries (bullets + domains + tech) — for resume selection / future use
 export const experiencesFull = career.experiences;
 export const projectsFull = career.projects;
@@ -22,6 +28,7 @@ export const experiences = career.experiences.map((e) => ({
   description: e.summary,
   category: e.category,
   logoUrl: e.logoUrl,
+  bullets: byPriority(e.bullets),
 }));
 
 export const projects = career.projects.map((p) => ({
@@ -30,6 +37,7 @@ export const projects = career.projects.map((p) => ({
   summary: p.summary,
   tags: p.tech,
   description: p.bullets.map((b) => b.text).join(" "),
+  bullets: byPriority(p.bullets),
   link: p.link,
   metrics: p.metrics,
 }));
