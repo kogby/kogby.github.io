@@ -3,10 +3,11 @@ import Container from "./ui/Container";
 
 export default function Navbar() {
 	const navLinks = [
-		{ name: "About", href: "#about" },
-		{ name: "Projects", href: "#projects" },
-		{ name: "Life List", href: "#life" },
-		{ name: "Contact", href: "#contact" },
+		// { name: "Studying", href: "/studying" }, // 先註解，之後再開
+		{ name: "Experience", href: "/experience" },
+		{ name: "Projects", href: "/projects" },
+		{ name: "Life List", href: "/life" },
+		{ name: "Contact", href: "/contact" },
 	];
 
 	return (

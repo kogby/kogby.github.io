@@ -1,0 +1,326 @@
+{
+  "domains": [
+    { "id": "ds", "label": "Data Science" },
+    { "id": "mle", "label": "ML Engineering" },
+    { "id": "de", "label": "Data Engineering" },
+    { "id": "backend", "label": "Backend" },
+    { "id": "distributed", "label": "Distributed Systems" },
+    { "id": "mlinfra", "label": "ML Infra" }
+  ],
+  "skills": {
+    "languages": ["Java", "Go", "C++", "Python", "SQL", "JavaScript"],
+    "technologies": ["Kubernetes", "Docker", "Kafka", "AWS", "Grafana", "Prometheus", "Spring Boot"],
+    "ml": ["PyTorch", "TensorFlow", "Spark", "Airflow", "HuggingFace", "MLflow"]
+  },
+  "experiences": [
+    {
+      "id": 13,
+      "slug": "amazon-swe",
+      "role": "Software Engineer Intern",
+      "org": "Amazon",
+      "period": "May 2026 - Present",
+      "category": "Work",
+      "domains": ["backend", "distributed", "mlinfra"],
+      "tech": ["AWS", "Serverless", "Event-Driven", "LLM"],
+      "summary": "Architected a distributed, event-driven serverless system on AWS with an LLM oncall agent.",
+      "bullets": [
+        { "text": "Designed an override mechanism that prevents a failure capable of $1.1M+ revenue loss under 100M+ record traffic spikes", "tags": ["backend", "reliability"], "priority": "high" },
+        { "text": "Architected a distributed, event-driven serverless system on AWS with a self-healing mechanism maintaining eventual consistency at a 5-minute SLA; integrated an LLM oncall agent with full audit traceability", "tags": ["distributed", "mlinfra"], "priority": "high" }
+      ],
+      "logoUrl": "/logos/amazon.png"
+    },
+    {
+      "id": 1,
+      "slug": "line-backend",
+      "role": "Backend Engineer (Tech Fresh)",
+      "org": "LINE Corporation",
+      "period": "Jul 2024 - Jun 2025",
+      "category": "Work",
+      "domains": ["backend", "de", "distributed"],
+      "tech": ["Java", "Kafka", "OpenTelemetry", "Grafana", "Prometheus", "PySpark", "Airflow"],
+      "summary": "Built 20+ Java backend services for a commerce platform with 21M+ daily users.",
+      "bullets": [
+        { "text": "Built 20+ Java backend services and async jobs for a commerce platform serving 21M+ daily users on Taiwan's top social app", "tags": ["backend"], "priority": "high" },
+        { "text": "Solved a critical end-to-end tracing gap with custom OpenTelemetry instrumentation for a customized Kafka client", "tags": ["distributed", "observability"], "priority": "high" },
+        { "text": "Built real-time microservice monitoring dashboards with Grafana and Prometheus for proactive alerting", "tags": ["observability"], "priority": "medium" },
+        { "text": "Delivered a production-ready PySpark/Airflow ETL pipeline ingesting TBs of data for precise marketing", "tags": ["de"], "priority": "medium" }
+      ],
+      "logoUrl": "/logos/line.png"
+    },
+    {
+      "id": 2,
+      "slug": "eva-air-mle",
+      "role": "Machine Learning Engineer (Lab Co-op)",
+      "org": "EVA Air",
+      "period": "Sep 2024 - Jan 2025",
+      "category": "Research",
+      "domains": ["mle", "ds", "de"],
+      "tech": ["Python", "Autoencoder", "NumPy", "Parquet"],
+      "summary": "Revamped Autoencoder-based anomaly detection and optimized turbulence data pipelines.",
+      "bullets": [
+        { "text": "Revamped the Autoencoder-based anomaly detection system for multi-event analysis, providing clearer pilot guidance", "tags": ["mle", "ds"], "priority": "high" },
+        { "text": "Overhauled turbulence data interpolation, shortening the model iteration cycle by 50% and achieving an 83% speedup by resolving CPU/I/O bottlenecks with vectorized computation and Parquet format", "tags": ["de", "perf"], "priority": "high" }
+      ],
+      "logoUrl": "/logos/evaair.png"
+    },
+    {
+      "id": 3,
+      "slug": "trend-micro-swe",
+      "role": "Software Engineer Intern",
+      "org": "Trend Micro",
+      "period": "Jul 2023 - Sep 2023",
+      "category": "Work",
+      "domains": ["backend"],
+      "tech": ["Jenkins", "CI/CD"],
+      "summary": "Cut deployment time by 67% with a unified Jenkins pipeline.",
+      "bullets": [
+        { "text": "Cut deployment time by 67% with a unified Jenkins pipeline that automated release workflows for two cross-OS teams", "tags": ["devops", "backend"], "priority": "high" },
+        { "text": "Owned the end-to-end solution and scaled to 18+ platform modules, earning a 4.73/5 manager rating (Top 5% of interns)", "tags": ["ownership"], "priority": "high" }
+      ],
+      "logoUrl": "/logos/trendmicro.png"
+    },
+    {
+      "id": 4,
+      "slug": "cathay-ds",
+      "role": "Data Scientist Intern",
+      "org": "Cathay Financial Holdings",
+      "period": "Feb 2023 - Jun 2023",
+      "category": "Work",
+      "domains": ["ds", "mle"],
+      "tech": ["Python", "PaddleOCR", "NER"],
+      "summary": "Reduced hospital processing time by 68% via an OCR & NER pipeline.",
+      "bullets": [
+        { "text": "Reduced hospital document processing time by 68% via an OCR & NER pipeline", "tags": ["ds", "mle"], "priority": "high" },
+        { "text": "Boosted PaddleOCR model accuracy from 75% to 84% with data augmentation", "tags": ["mle", "ds"], "priority": "high" }
+      ],
+      "logoUrl": "/logos/cathay.png"
+    },
+    {
+      "id": 5,
+      "slug": "ntu-productivity-lab",
+      "role": "Research Assistant",
+      "org": "NTU Productivity Optimization Lab",
+      "period": "May 2024 - Sep 2024",
+      "category": "Research",
+      "domains": ["ds"],
+      "tech": ["Python", "NumPy", "Matplotlib"],
+      "summary": "Researched predictability analysis with heterogeneous noise distribution models.",
+      "bullets": [
+        { "text": "Implemented heterogeneous noise distribution models to simulate predictability analysis on synthetic data", "tags": ["ds"], "priority": "high" },
+        { "text": "Built visualizations and refactored code to improve observation of Conditional Entropy metrics", "tags": ["ds"], "priority": "medium" }
+      ],
+      "logoUrl": "/logos/ntu.png"
+    },
+    {
+      "id": 6,
+      "slug": "ntu-decision-optimization-lab",
+      "role": "Research Assistant",
+      "org": "NTU Information Economy and Decision Optimization Lab",
+      "period": "Jan 2024 - Jun 2024",
+      "category": "Research",
+      "domains": ["ds"],
+      "tech": ["Python", "Gurobi"],
+      "summary": "Developed a heuristic algorithm to benchmark an NP-hard facility location optimization problem.",
+      "bullets": [
+        { "text": "Developed a heuristic algorithm to benchmark an NP-hard competitive facility location optimization problem", "tags": ["ds", "optimization"], "priority": "high" },
+        { "text": "Built an automated instance generator and a Gurobi solver with a modular design, reducing redundant code by 78%", "tags": ["ds", "backend"], "priority": "medium" }
+      ],
+      "logoUrl": "/logos/ntu.png"
+    },
+    {
+      "id": 7,
+      "slug": "data-quality-trust-ai",
+      "role": "Researcher",
+      "org": "Data Quality Pipeline & Trust AI",
+      "period": "Jan 2023 - Dec 2023",
+      "category": "Research",
+      "domains": ["ds", "mle", "de"],
+      "tech": ["Python", "scikit-learn", "SHAP", "Active Learning"],
+      "summary": "Built a Python package for missing-value imputation and model interpretability research.",
+      "bullets": [
+        { "text": "Developed a Python package for diverse missing-value imputation methods, improving accuracy from 86% to 97%", "tags": ["ds", "de"], "priority": "high" },
+        { "text": "Implemented Active Learning to identify crucial data points, achieving 20% cost saving", "tags": ["mle", "ds"], "priority": "high" },
+        { "text": "Conducted SHAP analysis for model interpretability", "tags": ["mle", "ds"], "priority": "medium" }
+      ],
+      "logoUrl": "/logos/ntu.png"
+    },
+    {
+      "id": 8,
+      "slug": "ntudac-president",
+      "role": "President",
+      "org": "NTU Data Analytics Club",
+      "period": "May 2023 - Present",
+      "category": "Leadership",
+      "domains": [],
+      "tech": [],
+      "summary": "Led NTU's largest data analytics student organization.",
+      "bullets": [
+        { "text": "Partnered with 12+ organizations (e.g., L'Oréal) for hands-on data projects", "tags": ["leadership"], "priority": "high" },
+        { "text": "Supervised 19 directors, processing 600+ applications", "tags": ["leadership"], "priority": "high" },
+        { "text": "Promoted data science education across Taiwan and offered free courses for students with disabilities", "tags": ["leadership", "outreach"], "priority": "medium" }
+      ],
+      "logoUrl": "/logos/ntudac.png"
+    },
+    {
+      "id": 9,
+      "slug": "ntudac-academic",
+      "role": "Director of Academic Affairs",
+      "org": "NTU Data Analytics Club",
+      "period": "May 2023 - Present",
+      "category": "Leadership",
+      "domains": [],
+      "tech": [],
+      "summary": "Led academic curriculum and mentoring for the club.",
+      "bullets": [
+        { "text": "Mentored a team of 10, developing metrics to identify 73% of high-quality exercises", "tags": ["leadership"], "priority": "high" },
+        { "text": "Conducted workshops on Github/ML rated 4.91/5", "tags": ["leadership", "teaching"], "priority": "medium" },
+        { "text": "Designed and led 30+ courses/workshops benefitting 120+ members", "tags": ["leadership"], "priority": "high" }
+      ],
+      "logoUrl": "/logos/ntudac.png"
+    },
+    {
+      "id": 10,
+      "slug": "pdao-contest-organizer",
+      "role": "Contest Organizer",
+      "org": "PDAO Programming Contest",
+      "period": "Mar 2022 - Jun 2022",
+      "category": "Leadership",
+      "domains": [],
+      "tech": ["Python"],
+      "summary": "Organized a university-wide programming contest for 150+ students.",
+      "bullets": [
+        { "text": "Organized a university-wide programming contest with 150+ students", "tags": ["leadership"], "priority": "high" },
+        { "text": "Developed automated scripts for test case generation, improving preparation efficiency", "tags": ["leadership", "automation"], "priority": "medium" }
+      ],
+      "logoUrl": "/logos/ntu.png"
+    },
+    {
+      "id": 11,
+      "slug": "yilan-programming-ta",
+      "role": "Teaching Assistant",
+      "org": "Yilan Programming Education Volunteer",
+      "period": "Sep 2022 - Jan 2023",
+      "category": "Leadership",
+      "domains": [],
+      "tech": [],
+      "summary": "Teaching Assistant for programming education initiatives in Yilan.",
+      "bullets": [
+        { "text": "Served as a Teaching Assistant for programming education initiatives in Yilan", "tags": ["leadership", "teaching"], "priority": "medium" }
+      ],
+      "logoUrl": "/logos/ntu.png"
+    },
+    {
+      "id": 12,
+      "slug": "ntu-gdsc-lead",
+      "role": "Project Leader",
+      "org": "NTU Google Developer Student Club",
+      "period": "Aug 2022 - Jan 2023",
+      "category": "Leadership",
+      "domains": [],
+      "tech": [],
+      "summary": "Led projects within the NTU Google Developer Student Club.",
+      "bullets": [
+        { "text": "Led projects and initiatives within the NTU Google Developer Student Club", "tags": ["leadership"], "priority": "medium" }
+      ],
+      "logoUrl": "/logos/gdsc.png"
+    }
+  ],
+  "projects": [
+    {
+      "id": 6,
+      "slug": "flashinfer-gpu-kernels",
+      "title": "High-Performance GPU Kernels on Blackwell B200",
+      "summary": "MLSys 2026 FlashInfer Contest — fused MoE and sparse attention kernels.",
+      "domains": ["mlinfra", "distributed"],
+      "tech": ["Triton", "CUDA", "FP8"],
+      "bullets": [
+        { "text": "Built a zero-CPU-sync fused MoE kernel with GPU-side grouping, FP8 tensor-core GEMMs, and a single CUDA Graph replay, reaching 1.32x vs FlashInfer and 70x vs PyTorch", "tags": ["mlinfra", "perf"], "priority": "high" },
+        { "text": "Built a sparse attention kernel reaching 47.8x over PyTorch by merging attention heads to cut HBM reads 16x", "tags": ["mlinfra", "perf"], "priority": "high" }
+      ],
+      "metrics": "1.32x vs FlashInfer, 70x vs PyTorch",
+      "link": "https://github.com/kogby"
+    },
+    {
+      "id": 7,
+      "slug": "loadshift-scheduling",
+      "title": "LoadShift: Cloud Job Scheduling Optimization",
+      "summary": "CMU Parallel Data Lab & Uber — resource modeling for large-scale analytics scheduling.",
+      "domains": ["distributed", "mlinfra", "de"],
+      "tech": ["Python"],
+      "bullets": [
+        { "text": "Built the resource modeling layer for a large-scale analytics scheduling system; profiled production workload traces to extract job periodicity and CPU utilization as structured inputs for downstream scheduling solvers", "tags": ["distributed", "de"], "priority": "high" }
+      ],
+      "metrics": "Production-scale workload traces",
+      "link": "https://github.com/kogby"
+    },
+    {
+      "id": 1,
+      "slug": "distributed-miner",
+      "title": "Reliable Distributed Miner",
+      "summary": "A reliable Go transport layer over UDP for distributed mining.",
+      "domains": ["backend", "distributed"],
+      "tech": ["Go", "Systems", "Distributed"],
+      "bullets": [
+        { "text": "Achieved data integrity with 20% packet loss via ARQ and checksums", "tags": ["distributed"], "priority": "high" },
+        { "text": "Implemented dynamic load balancing and task partitioning", "tags": ["distributed", "backend"], "priority": "medium" }
+      ],
+      "metrics": "Fault-tolerant at 20% packet loss",
+      "link": "https://github.com/kogby"
+    },
+    {
+      "id": 2,
+      "slug": "memory-allocator",
+      "title": "Dynamic Memory Allocator",
+      "summary": "High-throughput memory allocator in C utilizing segregated free lists.",
+      "domains": ["backend"],
+      "tech": ["C", "Systems", "Optimization"],
+      "bullets": [
+        { "text": "Optimized throughput by 30% with best-fit searches", "tags": ["perf"], "priority": "high" },
+        { "text": "Enhanced memory utilization to 74%+ using mini-blocks and footer elimination", "tags": ["perf"], "priority": "medium" }
+      ],
+      "metrics": "+30% Throughput, 74% Utilization",
+      "link": "https://github.com/kogby"
+    },
+    {
+      "id": 3,
+      "slug": "online-judge",
+      "title": "Online Judge Platform",
+      "summary": "Scalable backend for a university code-judging platform.",
+      "domains": ["backend", "distributed"],
+      "tech": ["Python", "Kafka", "Backend"],
+      "bullets": [
+        { "text": "Scaled to 1,200+ concurrent users by refactoring to a message-driven architecture using Kafka for asynchronous processing", "tags": ["backend", "distributed"], "priority": "high" }
+      ],
+      "metrics": "1,200+ Concurrent Users",
+      "link": "https://github.com/kogby"
+    },
+    {
+      "id": 4,
+      "slug": "house-price-prediction",
+      "title": "AI GO Contest: House Price Prediction",
+      "summary": "Top 7% ranking machine learning model for housing price prediction.",
+      "domains": ["ds", "mle"],
+      "tech": ["Python", "ML", "Data Science"],
+      "bullets": [
+        { "text": "Improved accuracy by 47% via geographical distance filtering", "tags": ["ds"], "priority": "high" },
+        { "text": "Boosted performance by 12% with beta target encoding", "tags": ["ds", "mle"], "priority": "medium" }
+      ],
+      "metrics": "Top 7% / 1000+ Teams",
+      "link": "https://github.com/kogby"
+    },
+    {
+      "id": 5,
+      "slug": "ntu-rating",
+      "title": "NTU Rating",
+      "summary": "Course review website allowing students to find and write comments.",
+      "domains": ["backend"],
+      "tech": ["Full Stack", "Web", "Backend"],
+      "bullets": [
+        { "text": "Designed and implemented a website for course reviews", "tags": ["backend", "fullstack"], "priority": "high" },
+        { "text": "Constructed the backend server and collaborated with marketing to derive campaign insights", "tags": ["backend"], "priority": "medium" }
+      ],
+      "metrics": "Served Student Community",
+      "link": "https://github.com/kogby"
+    }
+  ]
+}

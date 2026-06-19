@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Container from "./ui/Container";
+import SocialLinks from "./SocialLinks";
 
 export default function Hero() {
 	return (
@@ -14,14 +15,14 @@ export default function Hero() {
 						transition={{ duration: 0.5 }}
 						className="text-5xl md:text-7xl font-bold tracking-tight text-primary leading-tight"
 					>
-						Building scalable <br />
+						Turning ambiguity into <br />
 						<motion.span
 							initial={{ opacity: 0 }}
 							animate={{ opacity: 1 }}
 							transition={{ delay: 0.3, duration: 0.5 }}
 							className="text-gray-400"
 						>
-							intelligent systems.
+							scalable systems.
 						</motion.span>
 					</motion.h1>
 
@@ -32,13 +33,38 @@ export default function Hero() {
 						className="text-xl md:text-2xl text-gray-600 leading-relaxed max-w-2xl"
 					>
 						Hi, I'm <span className="text-black font-semibold">Jerry Chen</span>.
-						I engineer minimal, high-performance backend infrastructure & ML systems for scalable applications.
+						I focus on translating ambiguous requirements into concrete
+						architectures, providing large-scale, data-intensive AI/ML system
+						solutions.
+					</motion.p>
+
+					<motion.p
+						initial={{ opacity: 0, y: 20 }}
+						animate={{ opacity: 1, y: 0 }}
+						transition={{ delay: 0.55, duration: 0.5 }}
+						className="text-base md:text-lg text-gray-500 leading-relaxed max-w-2xl"
+					>
+						Recent work spans LLM inference serving, distributed systems, and
+						cloud infrastructure. Currently researching production-scale job
+						scheduling with the{" "}
+						<span className="text-gray-700 font-medium">CMU Parallel Data Lab</span>{" "}
+						in collaboration with Uber.
+					</motion.p>
+
+					<motion.p
+						initial={{ opacity: 0, y: 20 }}
+						animate={{ opacity: 1, y: 0 }}
+						transition={{ delay: 0.65, duration: 0.5 }}
+						className="text-sm md:text-base text-gray-400 font-mono"
+					>
+						Graduating Dec 2026 · Open to AI/Cloud Infra, MLE &amp; Solutions
+						Architect roles.
 					</motion.p>
 
 					<motion.div
 						initial={{ opacity: 0, y: 20 }}
 						animate={{ opacity: 1, y: 0 }}
-						transition={{ delay: 0.5, duration: 0.5 }}
+						transition={{ delay: 0.75, duration: 0.5 }}
 						className="pt-8 flex gap-4"
 					>
 						<a
@@ -54,6 +80,8 @@ export default function Hero() {
 							Contact Me
 						</a>
 					</motion.div>
+
+					<SocialLinks />
 				</div>
 			</Container>
 		</section>

@@ -6,10 +6,10 @@ export default function Footer() {
 			<Container className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500">
 				<p>© {new Date().getFullYear()} kogby. All rights reserved.</p>
 				<div className="flex gap-6">
-					<a href="https://github.com" target="_blank" rel="noopener noreferrer" className="hover:text-black transition-colors">
+					<a href="https://github.com/kogby" target="_blank" rel="noopener noreferrer" className="hover:text-black transition-colors">
 						GitHub
 					</a>
-					<a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="hover:text-black transition-colors">
+					<a href="https://www.linkedin.com/in/jerry-cj/" target="_blank" rel="noopener noreferrer" className="hover:text-black transition-colors">
 						LinkedIn
 					</a>
 					<a href="mailto:chen.jerry.cj@gmail.com" className="hover:text-black transition-colors">

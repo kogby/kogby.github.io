@@ -1,167 +1,40 @@
-export const experiences = [
-  {
-    id: 1,
-    role: "Backend Engineer - Tech Fresh",
-    company: "LINE Corporation",
-    period: "Jul 2024 - Jun 2025",
-    description: "Built 20+ Java backend services for a commerce platform with 21M+ daily users. Solved tracing gaps with OpenTelemetry, enabled real-time monitoring with Grafana/Prometheus, and built production PySpark/Airflow ETL pipelines.",
-    category: "Work",
-    logoUrl: "/logos/line.png",
-  },
-  {
-    id: 2,
-    role: "Machine Learning Engineer (Lab Co-op)",
-    company: "EVA Air",
-    period: "Sep 2024 - Jan 2025",
-    description: "Revamped Autoencoder-based anomaly detection. Optimized turbulence data interpolation achieving 83% speedup using vectorized computations and Parquet format.",
-    category: "Research",
-    logoUrl: "/logos/evaair.png",
-  },
-  {
-    id: 3,
-    role: "Software Engineer Intern",
-    company: "Trend Micro",
-    period: "Jul 2023 - Sep 2023",
-    description: "Cut deployment time by 67% with a unified Jenkins pipeline. Orchestrated parallel workflows across multiple repositories and Jenkins shards.",
-    category: "Work",
-    logoUrl: "/logos/trendmicro.png",
-  },
-  {
-    id: 4,
-    role: "Data Scientist Intern",
-    company: "Cathay Financial Holdings",
-    period: "Feb 2023 - Jun 2023",
-    description: "Reduced hospital processing time by 68% via OCR & NER pipeline. Boosted paddleOCR model accuracy from 75% to 84% with data augmentation.",
-    category: "Work",
-    logoUrl: "/logos/cathay.png",
-  },
-  {
-    id: 5,
-    role: "Research Assistant",
-    company: "NTU Productivity Optimization Lab",
-    period: "May 2024 - Sep 2024",
-    description: "Researched on predictability analysis. Implemented heterogeneous noise distribution models to simulate predictability analysis on synthetic data. Conducted visualizations and code refactoring to improve observation of Conditional Entropy metrics.",
-    category: "Research",
-    logoUrl: "/logos/ntu.png",
-  },
-  {
-    id: 6,
-    role: "Research Assistant",
-    company: "NTU Information Economy and Decision Optimization Lab",
-    period: "Jan 2024 - Jun 2024",
-    description: "Developed a heuristic algorithm to benchmark an NP-hard competitive facility location optimization problem. Implemented an automated instance generator and a solver with Gurobi using a modular design approach, reducing redundancy code by 78%.",
-    category: "Research",
-    logoUrl: "/logos/ntu.png",
-  },
-  {
-    id: 7,
-    role: "Researcher",
-    company: "Data Quality Pipeline & Trust AI",
-    period: "Jan 2023 - Dec 2023",
-    description: "Developed a Python package for diverse missing value imputation methods, improving accuracy from 86% to 97%. Implemented Active Learning to identify crucial data points (20% cost saving) and conducted SHAP analysis for model interpretability.",
-    category: "Research",
-    logoUrl: "/logos/ntu.png",
-  },
-  {
-    id: 8,
-    role: "President",
-    company: "NTU Data Analytics Club",
-    period: "May 2023 - Present",
-    description: "Partnered with 12+ organizations (e.g., L'Oréal) for hands-on projects. Supervised 19 directors, processing 600+ applications. Promoted data science education across Taiwan and offered free courses for students with disabilities.",
-    category: "Leadership",
-    logoUrl: "/logos/ntudac.png",
-  },
-  {
-    id: 9,
-    role: "Director of Academic Affairs",
-    company: "NTU Data Analytics Club",
-    period: "May 2023 - Present",
-    description: "Mentored a team of 10, developing metrics to identify 73% of high-quality exercises. Conducted workshops on Github/ML (4.91/5 rating). Designed and led 30+ courses/workshops benefitting 120+ members.",
-    category: "Leadership",
-    logoUrl: "/logos/ntudac.png",
-  },
-  {
-    id: 10,
-    role: "Contest Organizer",
-    company: "PDAO Programming Contest",
-    period: "Mar 2022 - Jun 2022",
-    description: "Organized a university-wide programming contest with 150+ students. Developed automated scripts for test case generation, significantly improving preparation efficiency.",
-    category: "Leadership",
-    logoUrl: "/logos/ntu.png",
-  },
-  {
-    id: 11,
-    role: "Teaching Assistant",
-    company: "Yilan Programming Education Volunteer",
-    period: "Sep 2022 - Jan 2023",
-    description: "Served as a Teaching Assistant for programming education initiatives in Yilan.",
-    category: "Leadership",
-    logoUrl: "/logos/ntu.png",
-  },
-  {
-    id: 12,
-    role: "Project Leader",
-    company: "NTU Google Developer Student Club",
-    period: "Aug 2022 - Jan 2023",
-    description: "Led projects and initiatives within the Google Developer Student Club at NTU.",
-    category: "Leadership",
-    logoUrl: "/logos/gdsc.png",
-  }
-];
+import career from "@/data/career.json";
 
-export const projects = [
-  {
-    id: 1,
-    title: "Reliable Distributed Miner",
-    summary: "A reliable Go transport layer over UDP for distributed mining.",
-    tags: ["Systems", "Go", "Distributed"],
-    description: "Achieved data integrity with 20% packet loss via ARQ/checksums. Implemented dynamic load balancing and task partitioning.",
-    link: "https://github.com/kogby",
-    metrics: "Fault-tolerant at 20% packet loss",
-  },
-  {
-    id: 2,
-    title: "Dynamic Memory Allocator",
-    summary: "High-throughput memory allocator in C utilizing segregated free lists.",
-    tags: ["Systems", "C", "Optimization"],
-    description: "Optimized throughput by 30% with best-fit searches. Enhanced memory utilization to 74%+ using mini-blocks and footer elimination.",
-    link: "https://github.com/kogby",
-    metrics: "+30% Throughput, 74% Utilization",
-  },
-  {
-    id: 3,
-    title: "Online Judge Platform",
-    summary: "Scalable backend for a university code-judging platform.",
-    tags: ["Backend", "Python", "Kafka"],
-    description: "Scaled to 1,200+ concurrent users by refactoring to a message-driven architecture using Kafka for asynchronous processing.",
-    link: "https://github.com/kogby",
-    metrics: "1,200+ Concurrent Users",
-  },
-  {
-    id: 4,
-    title: "AI GO Contest: House Price Prediction",
-    summary: "Top 7% ranking machine learning model for housing price prediction.",
-    tags: ["ML", "Python", "Data Science"],
-    description: "Improved accuracy by 47% via geographical distance filtering. Boosted performance by 12% with beta target encoding.",
-    link: "https://github.com/kogby",
-    metrics: "Top 7% / 1000+ Teams",
-  },
-  {
-    id: 5,
-    title: "NTU Rating",
-    summary: "Course review website allowing students to find and write comments.",
-    tags: ["Full Stack", "Web", "Backend"],
-    description: "Designed and implemented a website for course reviews. Constructed backend server and collaborated with marketing to derive campaign insights.",
-    link: "https://github.com/kogby",
-    metrics: "Served Student Community",
-  },
-];
+// ── Central source of truth ──────────────────────────────────────────────
+// data/career.json is the single source of truth, shared by this website and
+// the Resume-SWE submodule. The exports below derive the website-facing shapes
+// from it; edit career.json, not these.
 
-export const skills = {
-  languages: ["Java", "Go", "C++", "Python", "SQL", "JavaScript"],
-  technologies: ["Kubernetes", "Docker", "Kafka", "AWS", "Grafana", "Prometheus", "Spring Boot"],
-  ml: ["PyTorch", "TensorFlow", "Spark", "Airflow", "HuggingFace", "MLflow"],
-};
+export type Bullet = { text: string; tags: string[]; priority: string };
+export type ExperienceFull = (typeof career.experiences)[number];
+export type ProjectFull = (typeof career.projects)[number];
+
+// Rich entries (bullets + domains + tech) — for resume selection / future use
+export const experiencesFull = career.experiences;
+export const projectsFull = career.projects;
+
+// Backward-compatible website shape (components keep working unchanged)
+export const experiences = career.experiences.map((e) => ({
+  id: e.id,
+  role: e.role,
+  company: e.org,
+  period: e.period,
+  description: e.summary,
+  category: e.category,
+  logoUrl: e.logoUrl,
+}));
+
+export const projects = career.projects.map((p) => ({
+  id: p.id,
+  title: p.title,
+  summary: p.summary,
+  tags: p.tech,
+  description: p.bullets.map((b) => b.text).join(" "),
+  link: p.link,
+  metrics: p.metrics,
+}));
+
+export const skills = career.skills;
 
 export type LifeListItem = {
   id: number;
@@ -175,3 +48,45 @@ export const lifeList: LifeListItem[] = [
   { id: 3, text: "Earn 1M (USD)" },
   { id: 4, text: "Have my own cafeteria" },
 ];
+
+export const socialLinks = [
+  { name: "Email", href: "mailto:chen.jerry.cj@gmail.com", icon: "mail" },
+  { name: "LinkedIn", href: "https://www.linkedin.com/in/jerry-cj/", icon: "linkedin" },
+  { name: "GitHub", href: "https://github.com/kogby", icon: "github" },
+  { name: "Medium", href: "https://medium.com/@kogby0507", icon: "medium" },
+  { name: "CV", href: "/resume_Jerry_Chen.pdf", icon: "file" },
+];
+
+export const studyingNow = [
+  {
+    id: 1,
+    title: "Designing Data-Intensive Applications",
+    type: "book" as const,
+    author: "Martin Kleppmann",
+    imageUrl: "/studying/ddia.jpg",
+    link: "https://dataintensive.net/",
+  },
+  {
+    id: 2,
+    title: "CMU 15-445: Database Systems",
+    type: "course" as const,
+    author: "Andy Pavlo",
+    imageUrl: "/studying/cmu15445.jpg",
+    link: "https://15445.courses.cs.cmu.edu/",
+  },
+];
+
+// Domain categories for the constellation graph
+export const domains = career.domains;
+
+// Projects with domain tags for constellation mapping
+export const projectsWithDomains = career.projects.map((p) => ({
+  id: p.id,
+  title: p.title,
+  summary: p.summary,
+  tags: p.tech,
+  domains: p.domains,
+  description: p.bullets.map((b) => b.text).join(" "),
+  link: p.link,
+  metrics: p.metrics,
+}));
