@@ -1,0 +1,3 @@
+[submodule "resume-swe"]
+	path = resume-swe
+	url = https://github.com/kogby/Resume-SWE
