@@ -1,4 +1,5 @@
 import Container from "./ui/Container";
+import SocialLinks from "./SocialLinks";
 
 export default function Contact() {
 	return (
@@ -15,6 +16,10 @@ export default function Contact() {
 				>
 					chen.jerry.cj@gmail.com
 				</a>
+
+				<div className="mt-12 flex justify-center">
+					<SocialLinks />
+				</div>
 			</Container>
 		</section>
 	);
