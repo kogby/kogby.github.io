@@ -6,6 +6,7 @@ export default function Navbar() {
 		// { name: "Studying", href: "/studying" }, // 先註解，之後再開
 		{ name: "Experience", href: "/experience" },
 		{ name: "Projects", href: "/projects" },
+		{ name: "Skills", href: "/skills" },
 		{ name: "Life List", href: "/life" },
 		{ name: "Contact", href: "/contact" },
 	];

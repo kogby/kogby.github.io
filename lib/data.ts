@@ -1,4 +1,5 @@
 import career from "@/data/career.json";
+import courseworkData from "@/data/coursework.json";
 
 // ── Central source of truth ──────────────────────────────────────────────
 // data/career.json is the single source of truth, shared by this website and
@@ -42,7 +43,14 @@ export const projects = career.projects.map((p) => ({
   metrics: p.metrics,
 }));
 
-export const skills = career.skills;
+export type SkillCategory = { category: string; items: string[] };
+export const skills: SkillCategory[] = career.skills;
+
+// Coursework grouped into themes, ordered by importance. Website-only (not in
+// the resume-facing career.json). Each course carries its school so CMU slots
+// in later by adding entries.
+export type CourseworkTheme = (typeof courseworkData.coursework)[number];
+export const coursework = courseworkData.coursework;
 
 export type LifeListItem = {
   id: number;

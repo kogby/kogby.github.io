@@ -89,11 +89,11 @@ export default function Experience() {
 													className="w-full h-full object-contain"
 												/>
 											</div> */}
-											<h3 className="text-lg font-semibold">{exp.role}</h3>
+											<h3 className="text-lg font-semibold">{exp.company}</h3>
 										</div>
 
-										<h3 className="hidden md:block text-lg font-semibold">{exp.role}</h3>
-										<p className="text-black font-medium">{exp.company}</p>
+										<h3 className="hidden md:block text-lg font-semibold">{exp.company}</h3>
+										<p className="text-black font-medium">{exp.role}</p>
 
 										{exp.bullets.length > 0 ? (
 											<ul className="mt-2 space-y-1.5">

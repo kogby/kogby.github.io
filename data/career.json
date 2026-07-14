@@ -7,11 +7,11 @@
     { "id": "distributed", "label": "Distributed Systems" },
     { "id": "mlinfra", "label": "ML Infra" }
   ],
-  "skills": {
-    "languages": ["Java", "Go", "C++", "Python", "SQL", "JavaScript"],
-    "technologies": ["Kubernetes", "Docker", "Kafka", "AWS", "Grafana", "Prometheus", "Spring Boot"],
-    "ml": ["PyTorch", "TensorFlow", "Spark", "Airflow", "HuggingFace", "MLflow"]
-  },
+  "skills": [
+    { "category": "Languages & Frameworks", "items": ["Java", "C++", "Go", "CUDA", "Python", "JavaScript", "Spring Boot", "Flask", "Linux", "Shell"] },
+    { "category": "Cloud & Infra", "items": ["Kubernetes", "Docker", "Kafka", "gRPC", "Terraform", "AWS", "GCP", "Azure", "Redis", "PostgreSQL", "Grafana", "Prometheus", "Jenkins", "ArgoCD", "SonarQube", "Liquibase"] },
+    { "category": "ML & AI", "items": ["PyTorch", "Airflow", "Spark", "Hive", "HuggingFace", "MLflow"] }
+  ],
   "experiences": [
     {
       "id": 13,

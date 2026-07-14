@@ -2,7 +2,10 @@
   "permissions": {
     "allow": [
       "Bash(grep -rn *)",
-      "Bash(git add *)"
+      "Bash(git add *)",
+      "Bash(cd /Users/kogby/Graduate && echo \"=== report dir ===\" && ls -la \"MLSys/MLSys_final_project_report\" && echo \"=== FlashInfer MLSys26 ===\" && ls \"MLSys_FlashInfer/MLSys26_FlashInfer\" && echo \"=== poster dir ===\" && ls \"MLSys_FlashInfer/llmsys_poster\")",
+      "Read(//Users/kogby/Graduate/**)",
+      "Bash(grep -nE \"achiev|speedup|[0-9]+\\\\.[0-9]+\\\\$?\\\\\\\\\\\\\\\\?times|[0-9]+x|reduc|HBM|bandwidth|latency|pipeline|CUDA Graph|autotun|persistent|FP8|SwiGLU|prefix|scatter\" \"MLSys/MLSys_final_project_report/main.tex\")"
     ]
   }
 }
