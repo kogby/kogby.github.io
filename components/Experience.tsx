@@ -6,6 +6,30 @@ import Container from "./ui/Container";
 import { highlightMetrics } from "./ui/Metric";
 import { experiences } from "@/lib/data";
 
+// Logo with line-art fallback: missing files render as an initial in a circle,
+// matching the site's geometric-minimalism style.
+function CompanyLogo({ src, name, size }: { src: string; name: string; size: string }) {
+	const [failed, setFailed] = useState(false);
+	return (
+		<div
+			className={`${size} relative bg-white rounded-full border border-gray-200 overflow-hidden flex items-center justify-center`}
+		>
+			{src && !failed ? (
+				<img
+					src={src}
+					alt={`${name} logo`}
+					onError={() => setFailed(true)}
+					className="w-full h-full object-contain p-1.5"
+				/>
+			) : (
+				<span className="text-sm font-semibold text-gray-400 select-none">
+					{name.charAt(0)}
+				</span>
+			)}
+		</div>
+	);
+}
+
 export default function Experience() {
 	const [activeTab, setActiveTab] = useState<"Work" | "Research" | "Leadership">("Work");
 
@@ -70,25 +94,13 @@ export default function Experience() {
 									</div>
 
 									<div className="hidden md:flex justify-center">
-										{/* <div className="w-12 h-12 relative bg-white rounded-full border border-gray-100 p-2 shadow-sm overflow-hidden flex items-center justify-center">
-											<img
-												src={exp.logoUrl}
-												alt={`${exp.company} logo`}
-												className="w-full h-full object-contain"
-											/>
-										</div> */}
+										<CompanyLogo src={exp.logoUrl} name={exp.company} size="w-12 h-12" />
 									</div>
 
 									<div className="space-y-2 relative">
 										{/* Mobile Logo View */}
 										<div className="md:hidden flex items-center gap-3 mb-2">
-											{/* <div className="w-10 h-10 relative bg-white rounded-full border border-gray-100 p-1.5 shadow-sm overflow-hidden flex items-center justify-center">
-												<img
-													src={exp.logoUrl}
-													alt={`${exp.company} logo`}
-													className="w-full h-full object-contain"
-												/>
-											</div> */}
+											<CompanyLogo src={exp.logoUrl} name={exp.company} size="w-10 h-10" />
 											<h3 className="text-lg font-semibold">{exp.company}</h3>
 										</div>
 
