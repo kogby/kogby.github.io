@@ -7,7 +7,7 @@ import SocialLinks from "./SocialLinks";
 
 export default function Hero() {
 	return (
-		<section id="home" className="pt-20 pb-32 md:pt-32 md:pb-48">
+		<section id="home" className="pt-20 pb-20 md:pt-32 md:pb-28">
 			<Container>
 				<div className="max-w-3xl space-y-8">
 					<motion.h1
