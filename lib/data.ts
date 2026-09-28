@@ -59,7 +59,7 @@ export const projects = career.projects.map((p) => ({
 }));
 
 // Coursework grouped into themes, ordered by importance. Website-only (not in
-// the resume-facing career.json). Each course carries its school; CMU entries have no code.
+// the resume-facing career.json). Each course carries its school and course number.
 export type CourseworkTheme = (typeof courseworkData.coursework)[number];
 export const coursework = courseworkData.coursework;
 

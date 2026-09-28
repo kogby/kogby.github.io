@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import Container from "./ui/Container";
 import { coursework } from "@/lib/data";
 
-// Theme title + its courses (CMU and NTU, with course numbers where known); no theme descriptions.
+// Theme title + its courses (CMU and NTU, with course numbers); no theme descriptions.
 export default function CourseworkList() {
 	return (
 		<section id="coursework" className="py-20 border-t border-gray-200">

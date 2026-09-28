@@ -6,17 +6,17 @@
       "courses": [
         {
           "school": "CMU",
-          "code": "",
+          "code": "15-642",
           "name": "Machine Learning Systems"
         },
         {
           "school": "CMU",
-          "code": "",
+          "code": "15-640",
           "name": "Distributed Systems"
         },
         {
           "school": "CMU",
-          "code": "",
+          "code": "15-503",
           "name": "Computer Systems"
         },
         {
@@ -62,17 +62,17 @@
       "courses": [
         {
           "school": "CMU",
-          "code": "",
+          "code": "11-868",
           "name": "LLM Systems"
         },
         {
           "school": "CMU",
-          "code": "",
+          "code": "10-601",
           "name": "Machine Learning"
         },
         {
           "school": "CMU",
-          "code": "",
+          "code": "10-623",
           "name": "Generative AI"
         },
         {
