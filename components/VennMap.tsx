@@ -21,8 +21,8 @@ const GAP = 34;
 const ACCENT = "var(--accent-primary)";
 
 const SIDES = [
-	{ region: "systems" as const, x: 235, title: "Systems", sub: ["Distributed Systems", "Cloud Infra", "Data Engineering"] },
-	{ region: "ml" as const, x: 565, title: "Machine Learning", sub: ["Data Science", "ML Engineering"] },
+	{ region: "systems" as const, x: 245, title: "Systems", sub: ["Distributed Systems", "Cloud Infra", "Data Engineering"] },
+	{ region: "ml" as const, x: 555, title: "Machine Learning", sub: ["Data Science", "ML Engineering"] },
 ];
 
 type Dot = { key: string; anchor: string; label: string; kind: "project" | "experience"; region: Region };
@@ -87,7 +87,7 @@ export default function VennMap() {
 
 				<svg
 					viewBox="110 40 580 410"
-					className="w-full max-w-2xl mx-auto h-auto select-none"
+					className="-mx-6 w-[calc(100%+3rem)] max-w-none sm:mx-auto sm:w-full sm:max-w-2xl h-auto select-none"
 					style={{ fontFamily: "var(--font-sans)" }}
 					onPointerLeave={() => focus(null)}
 					role="group"
