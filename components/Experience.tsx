@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import Container from "./ui/Container";
 import { highlightMetrics } from "./ui/Metric";
 import CompanyLogo from "./ui/CompanyLogo";
+import SlideToggle from "./ui/SlideToggle";
 import { experiences } from "@/lib/data";
 
 const TABS = ["Work", "Research"] as const;
@@ -36,27 +37,7 @@ export default function Experience() {
 						<div className="h-1 w-20 bg-black"></div>
 					</motion.div>
 
-					<div className="flex bg-gray-100 p-1 rounded-full">
-						{TABS.map((t) => (
-							<button
-								key={t}
-								onClick={() => setTab(t)}
-								aria-pressed={tab === t}
-								className={`relative px-5 py-1.5 rounded-full text-sm font-medium transition-colors ${
-									tab === t ? "text-white" : "text-gray-600 hover:text-gray-900"
-								}`}
-							>
-								{tab === t && (
-									<motion.span
-										layoutId="experienceTab"
-										className="absolute inset-0 bg-black rounded-full"
-										transition={{ type: "spring", bounce: 0.2, duration: 0.5 }}
-									/>
-								)}
-								<span className="relative z-10">{t}</span>
-							</button>
-						))}
-					</div>
+					<SlideToggle id="experienceTab" options={TABS.map((t) => ({ value: t, label: t }))} value={tab} onChange={setTab} />
 				</div>
 
 				<motion.div key={tab} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-12">

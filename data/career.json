@@ -32,9 +32,25 @@
       "logoUrl": "/logos/amazon.png"
     },
     {
+      "id": 14,
+      "slug": "uber-cmu-pdl",
+      "role": "Research Assistant",
+      "org": "Uber & CMU Parallel Data Lab",
+      "period": "Jan 2026 - Present",
+      "category": "Research",
+      "domains": ["distributed", "mlinfra", "de"],
+      "tech": ["Python"],
+      "summary": "CMU Parallel Data Lab & Uber — resource modeling for large-scale analytics scheduling.",
+      "bullets": [
+        { "text": "Modeled resource profiles from Uber's cloud spanning 60K daily pipelines and 3.2M jobs, feeding the schedulers of a dependency-aware framework that time-shift analytics jobs to cut peak cluster CPU by up to 33%.", "tags": ["distributed", "mlinfra"], "priority": "high" },
+        { "text": "Proposed four profile-fitting strategies from statistical estimators to LP optimization, and adopted median profiles that beat best-fit averages by 51% in scheduled advancement, finishing shifted jobs 3+ hours earlier on average.", "tags": ["mlinfra", "de"], "priority": "high" }
+      ],
+      "logoUrl": "/logos/cmu.png"
+    },
+    {
       "id": 1,
       "slug": "line-backend",
-      "role": "Backend Engineer (Tech Fresh)",
+      "role": "Software Engineer Intern",
       "org": "LINE Corporation",
       "period": "Jul 2024 - Jun 2025",
       "category": "Work",
@@ -241,19 +257,6 @@
         { "text": "Built a sparse attention kernel reaching 47.8x over PyTorch by merging attention heads to cut HBM reads 16x", "tags": ["mlinfra", "perf"], "priority": "high" }
       ],
       "metrics": "1.32x vs FlashInfer, 70x vs PyTorch",
-      "link": "https://github.com/kogby"
-    },
-    {
-      "id": 7,
-      "slug": "loadshift-scheduling",
-      "title": "LoadShift: Cloud Job Scheduling Optimization",
-      "summary": "CMU Parallel Data Lab & Uber — resource modeling for large-scale analytics scheduling.",
-      "domains": ["distributed", "mlinfra", "de"],
-      "tech": ["Python"],
-      "bullets": [
-        { "text": "Built the resource modeling layer for a large-scale analytics scheduling system; profiled production workload traces to extract job periodicity and CPU utilization as structured inputs for downstream scheduling solvers", "tags": ["distributed", "de"], "priority": "high" }
-      ],
-      "metrics": "Production-scale workload traces",
       "link": "https://github.com/kogby"
     },
     {

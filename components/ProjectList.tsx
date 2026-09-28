@@ -1,32 +1,57 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { flushSync } from "react-dom";
 import { motion } from "framer-motion";
 import Container from "./ui/Container";
 import { highlightMetrics } from "./ui/Metric";
+import SlideToggle from "./ui/SlideToggle";
 import { projects } from "@/lib/data";
-import { REGIONS } from "@/lib/venn";
+import { REGIONS, type Region } from "@/lib/venn";
+
+type Filter = Region | "all";
+// Short labels so the four options fit a 360px phone; group headings keep the full names.
+const FILTERS: { value: Filter; label: string }[] = [
+	{ value: "all", label: "All" },
+	{ value: "mlinfra", label: "ML Infra" },
+	{ value: "systems", label: "Systems" },
+	{ value: "ml", label: "ML" },
+];
 
 export default function ProjectList() {
+	const [filter, setFilter] = useState<Filter>("all");
+
+	// The venn map fires "venn:reveal" before jumping; show the target's region if it is filtered out.
+	useEffect(() => {
+		const onReveal = (e: Event) => {
+			const p = projects.find((x) => `project-${x.slug}` === (e as CustomEvent<string>).detail);
+			if (p) flushSync(() => setFilter((f) => (f === "all" || f === p.region ? f : p.region)));
+		};
+		window.addEventListener("venn:reveal", onReveal);
+		return () => window.removeEventListener("venn:reveal", onReveal);
+	}, []);
+
 	return (
 		<section id="projects" className="py-20 border-t border-gray-200">
 			<Container>
-				<motion.div
-					initial={{ opacity: 0, x: -20 }}
-					whileInView={{ opacity: 1, x: 0 }}
-					viewport={{ once: true }}
-					className="mb-12"
-				>
-					<h2 className="text-3xl font-bold tracking-tight mb-4">Projects</h2>
-					<div className="h-1 w-20 bg-black"></div>
-				</motion.div>
+				<div className="mb-12 flex flex-wrap items-end justify-between gap-6">
+					<motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
+						<h2 className="text-3xl font-bold tracking-tight mb-4">Projects</h2>
+						<div className="h-1 w-20 bg-black"></div>
+					</motion.div>
 
-				<div className="space-y-14">
-					{REGIONS.map((r) => {
+					<SlideToggle id="projectFilter" options={FILTERS} value={filter} onChange={setFilter} />
+				</div>
+
+				<motion.div key={filter} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-14">
+					{REGIONS.filter((r) => filter === "all" || r.id === filter).map((r) => {
 						const list = projects.filter((p) => p.region === r.id);
 						return (
 							list.length > 0 && (
 								<div key={r.id}>
-									<h3 className="text-sm font-mono uppercase tracking-widest text-gray-500 mb-6">{r.label}</h3>
+									{filter === "all" && (
+										<h3 className="text-sm font-mono uppercase tracking-widest text-gray-500 mb-6">{r.label}</h3>
+									)}
 									<div className="grid md:grid-cols-2 gap-8">
 										{list.map((project) => (
 											<motion.div
@@ -84,7 +109,7 @@ export default function ProjectList() {
 							)
 						);
 					})}
-				</div>
+				</motion.div>
 			</Container>
 		</section>
 	);

@@ -7,8 +7,8 @@ const career = JSON.parse(readFileSync(new URL("../data/career.json", import.met
 
 const expected: Record<string, string> = {
   "amazon-swe": "mlinfra",
+  "uber-cmu-pdl": "mlinfra",
   "flashinfer-gpu-kernels": "mlinfra",
-  "loadshift-scheduling": "mlinfra",
   "line-backend": "systems",
   "trend-micro-swe": "systems",
   "distributed-miner": "systems",
