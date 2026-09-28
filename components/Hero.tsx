@@ -45,8 +45,7 @@ export default function Hero() {
 						transition={{ delay: 0.65, duration: 0.5 }}
 						className="text-sm md:text-base text-gray-400 font-mono"
 					>
-						Graduating Dec 2026 · Open to AI/Cloud Infra, MLE &amp; Solutions
-						Architect roles.
+						Graduating Dec 2026 · Open to AI/Cloud Infra SWE or MLE roles.
 					</motion.p>
 
 					<motion.div

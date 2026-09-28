@@ -12,7 +12,7 @@ const caveat = Caveat({ subsets: ["latin"], variable: "--font-caveat" });
 export const metadata: Metadata = {
   title: "Jerry Chen (kogby) | ML Infra & Backend Engineer",
   description:
-    "Jerry Chen — CMU MS student working on LLM inference serving, distributed systems, and cloud infrastructure. Open to AI/Cloud Infra, MLE & Solutions Architect roles.",
+    "Jerry Chen — CMU MS student working on LLM inference serving, distributed systems, and cloud infrastructure. Open to AI/Cloud Infra SWE or MLE roles.",
   openGraph: {
     title: "Jerry Chen (kogby) | ML Infra & Backend Engineer",
     description:

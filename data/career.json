@@ -159,7 +159,7 @@
         { "text": "Supervised 19 directors, processing 600+ applications", "tags": ["leadership"], "priority": "high" },
         { "text": "Promoted data science education across Taiwan and offered free courses for students with disabilities", "tags": ["leadership", "outreach"], "priority": "medium" }
       ],
-      "logoUrl": "/logos/ntu.png"
+      "logoUrl": "/logos/ntudac.svg"
     },
     {
       "id": 9,
@@ -176,7 +176,7 @@
         { "text": "Conducted workshops on Github/ML rated 4.91/5", "tags": ["leadership", "teaching"], "priority": "medium" },
         { "text": "Designed and led 30+ courses/workshops benefitting 120+ members", "tags": ["leadership"], "priority": "high" }
       ],
-      "logoUrl": "/logos/ntu.png"
+      "logoUrl": "/logos/ntudac.svg"
     },
     {
       "id": 10,

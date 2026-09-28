@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { flushSync } from "react-dom";
 import { motion } from "framer-motion";
 import Container from "./ui/Container";
 import { highlightMetrics } from "./ui/Metric";
@@ -23,7 +24,7 @@ function CompanyLogo({ src, name, size }: { src: string; name: string; size: str
 					ref={(img) => {
 						if (img?.complete && img.naturalWidth === 0) setFailed(true);
 					}}
-					className="w-full h-full object-contain p-1.5"
+					className="w-full h-full object-contain p-[12%]"
 				/>
 			) : (
 				<span className="text-sm font-semibold text-gray-400 select-none">
@@ -34,25 +35,59 @@ function CompanyLogo({ src, name, size }: { src: string; name: string; size: str
 	);
 }
 
+const TABS = ["Work", "Research"] as const;
+type Tab = (typeof TABS)[number];
+
 const timeline = experiences.filter((e) => e.category !== "Leadership");
 const leadership = experiences.filter((e) => e.category === "Leadership");
 
 export default function Experience() {
+	const [tab, setTab] = useState<Tab>("Work");
+
+	// The venn map fires "venn:reveal" before jumping; switch tabs synchronously so the target exists.
+	useEffect(() => {
+		const onReveal = (e: Event) => {
+			const exp = timeline.find((x) => `exp-${x.slug}` === (e as CustomEvent<string>).detail);
+			if (exp) flushSync(() => setTab(exp.category as Tab));
+		};
+		window.addEventListener("venn:reveal", onReveal);
+		return () => window.removeEventListener("venn:reveal", onReveal);
+	}, []);
+
 	return (
 		<section id="experience" className="py-20 border-t border-gray-200">
 			<Container>
-				<motion.div
-					initial={{ opacity: 0, x: -20 }}
-					whileInView={{ opacity: 1, x: 0 }}
-					viewport={{ once: true }}
-					className="mb-16"
-				>
-					<h2 className="text-3xl font-bold tracking-tight mb-4">Experience</h2>
-					<div className="h-1 w-20 bg-black"></div>
-				</motion.div>
+				<div className="mb-16 flex flex-wrap items-end justify-between gap-6">
+					<motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
+						<h2 className="text-3xl font-bold tracking-tight mb-4">Experience</h2>
+						<div className="h-1 w-20 bg-black"></div>
+					</motion.div>
 
-				<div className="space-y-12">
-					{timeline.map((exp) => (
+					<div className="flex bg-gray-100 p-1 rounded-full">
+						{TABS.map((t) => (
+							<button
+								key={t}
+								onClick={() => setTab(t)}
+								aria-pressed={tab === t}
+								className={`relative px-5 py-1.5 rounded-full text-sm font-medium transition-colors ${
+									tab === t ? "text-white" : "text-gray-600 hover:text-gray-900"
+								}`}
+							>
+								{tab === t && (
+									<motion.span
+										layoutId="experienceTab"
+										className="absolute inset-0 bg-black rounded-full"
+										transition={{ type: "spring", bounce: 0.2, duration: 0.5 }}
+									/>
+								)}
+								<span className="relative z-10">{t}</span>
+							</button>
+						))}
+					</div>
+				</div>
+
+				<motion.div key={tab} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-12">
+					{timeline.filter((e) => e.category === tab).map((exp) => (
 						<motion.div
 							key={exp.id}
 							id={`exp-${exp.slug}`}
@@ -64,7 +99,6 @@ export default function Experience() {
 						>
 							<div className="md:text-right">
 								<p className="text-sm font-medium text-gray-500 font-mono tracking-tight">{exp.period}</p>
-								<p className="text-xs text-gray-400 mt-1">{exp.category}</p>
 							</div>
 
 							<div className="hidden md:flex justify-center">
@@ -96,7 +130,7 @@ export default function Experience() {
 							</div>
 						</motion.div>
 					))}
-				</div>
+				</motion.div>
 
 				<h3 className="mt-16 mb-6 text-sm font-mono uppercase tracking-widest text-gray-500">Leadership</h3>
 				<ul className="space-y-4">

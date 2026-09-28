@@ -22,7 +22,7 @@ const ACCENT = "var(--accent-primary)";
 const REGION_LABEL = Object.fromEntries(REGIONS.map((r) => [r.id, r.label])) as Record<Region, string>;
 
 const SIDES = [
-	{ region: "systems" as const, x: 245, title: "Systems", sub: ["Distributed Systems", "Cloud Infra", "Data Engineering"] },
+	{ region: "systems" as const, x: 245, title: "Systems", sub: ["Distributed Systems", "Cloud Infra"] },
 	{ region: "ml" as const, x: 555, title: "Machine Learning", sub: ["Data Science", "ML Engineering"] },
 ];
 
@@ -54,6 +54,8 @@ const placed = dots.map((d) => {
 });
 
 function jump(id: string) {
+	// Experience shows one tab at a time; it switches synchronously if the target is on the hidden tab.
+	window.dispatchEvent(new CustomEvent("venn:reveal", { detail: id }));
 	const el = document.getElementById(id);
 	if (!el) return;
 	const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
