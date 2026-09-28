@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Caveat } from "next/font/google";
+import Script from "next/script";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import "./globals.css";
@@ -34,6 +35,15 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
+        {/* GoatCounter, pinned version + SRI so a tampered CDN file is refused; to upgrade take version + hash from goatcounter.com/help/countjs-versions.
+            ponytail: counts full page loads only, client-side route changes are not tracked. Add usePathname + goatcounter.count() if per-page stats matter */}
+        <Script
+          data-goatcounter="https://kogby.goatcounter.com/count"
+          src="https://gc.zgo.at/count.v5.js"
+          integrity="sha384-atnOLvQb9t+jTSipvd75X2yginT4PjVbqDdlJAmxMm+wYElFmeR6EmLP5bYeoRVQ"
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );
