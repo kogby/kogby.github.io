@@ -30,7 +30,7 @@ export default function Navbar() {
 					<span aria-hidden className="h-4 w-px shrink-0 bg-gray-300" />
 					<Link
 						href="/writings"
-						className="text-lg text-gray-400 hover:text-black transition-colors"
+						className="pr-1 text-lg text-gray-400 hover:text-black transition-colors"
 						style={{ fontFamily: "var(--font-handwriting)" }}
 					>
 						personal

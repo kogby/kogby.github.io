@@ -29,8 +29,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth motion-reduce:scroll-auto">
-      <body className={`${inter.variable} ${caveat.variable} antialiased min-h-screen flex flex-col`}>
+    <html lang="en" className={`${inter.variable} ${caveat.variable} scroll-smooth motion-reduce:scroll-auto`}>
+      <body className="antialiased min-h-screen flex flex-col">
         <GridBackground />
         <Navbar />
         <main className="flex-grow pt-20">
