@@ -1,5 +1,6 @@
 import career from "@/data/career.json";
 import courseworkData from "@/data/coursework.json";
+import { regionOf } from "@/lib/venn";
 
 // ── Central source of truth ──────────────────────────────────────────────
 // data/career.json is the single source of truth, shared by this website and
@@ -20,20 +21,33 @@ const byPriority = (bullets: Bullet[]): Bullet[] =>
 export const experiencesFull = career.experiences;
 export const projectsFull = career.projects;
 
-// Backward-compatible website shape (components keep working unchanged)
-export const experiences = career.experiences.map((e) => ({
-  id: e.id,
-  role: e.role,
-  company: e.org,
-  period: e.period,
-  description: e.summary,
-  category: e.category,
-  logoUrl: e.logoUrl,
-  bullets: byPriority(e.bullets),
-}));
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+// "May 2026 - Present" → sortable month number. Parsed by hand: Date("May 2026") is not
+// portable (Safari), and this module runs on both server and client.
+const startKey = (period: string) => {
+  const [m, y] = period.split(" - ")[0].split(" ");
+  return Number(y) * 12 + MONTHS.indexOf(m);
+};
+
+// Website shape, newest first
+export const experiences = career.experiences
+  .map((e) => ({
+    id: e.id,
+    slug: e.slug,
+    role: e.role,
+    company: e.org,
+    period: e.period,
+    description: e.summary,
+    category: e.category,
+    logoUrl: e.logoUrl,
+    bullets: byPriority(e.bullets),
+    region: regionOf(e.domains),
+  }))
+  .sort((a, b) => startKey(b.period) - startKey(a.period));
 
 export const projects = career.projects.map((p) => ({
   id: p.id,
+  slug: p.slug,
   title: p.title,
   summary: p.summary,
   tags: p.tech,
@@ -41,6 +55,7 @@ export const projects = career.projects.map((p) => ({
   bullets: byPriority(p.bullets),
   link: p.link,
   metrics: p.metrics,
+  region: regionOf(p.domains),
 }));
 
 export type SkillCategory = { category: string; items: string[] };
@@ -72,6 +87,19 @@ export const socialLinks = [
   { name: "Medium", href: "https://medium.com/@kogby0507", icon: "medium" },
   { name: "CV", href: "/resume_Jerry_Chen.pdf", icon: "file" },
 ];
+
+export type Writing = {
+  title: string;
+  date: string; // "2026-10"
+  platform: "Substack" | "Medium";
+  url: string;
+  blurb: string;
+};
+
+// Newest first. Posts live on Substack / Medium; the site only keeps the index.
+export const writings: Writing[] = [];
+
+export const writingProfiles = [{ name: "Medium", href: "https://medium.com/@kogby0507" }];
 
 export const studyingNow = [
   {
