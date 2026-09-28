@@ -11,8 +11,9 @@ export default function LearningPage() {
     <>
       <Container className="pt-12 pb-12">
         <p className="text-lg text-gray-600 leading-relaxed max-w-2xl">
-          I&apos;m a broad learner: systems, machine learning, data, and the occasional book on how to
-          think. This is what I&apos;ve studied, and what I&apos;m reading now.
+          I started in information management, got pulled into data science, then backend and
+          distributed systems, and now ML infrastructure, down to GPU kernels. I learn whatever the
+          problem in front of me needs. Here&apos;s the formal side, and what I&apos;m reading now.
         </p>
       </Container>
       <Education />
