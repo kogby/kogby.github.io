@@ -83,14 +83,14 @@
 - **Summary：** 用現成文字，不新寫。內容是 Hero 原本的「Recent work spans…」段落，加上未使用的 `Bio.tsx` 文字（CMU、LINE、EVA Air、NTU Data Analytics Club、「minimal, observable systems」）。放在 Hero 下方；Hero 只留大標語、「Hi, I'm Jerry」那句、畢業/求職那行、CTA、社群連結。
 - **Hero CTA：** 「View Work」→ `#map`，「Contact Me」→ `#contact`。
 - **公司 logo：**
-  - 來源：Wikimedia Commons 或官方網站。對象是 Amazon、EVA Air、Trend Micro、Cathay Financial、NTU（NTU 各 lab 共用）。Leadership 清單不放 logo，所以社團類不找。
+  - 來源：Wikimedia Commons 或官方網站。對象是 Amazon、EVA Air、Trend Micro、Cathay Financial、NTU（NTU 各 lab 共用），以及 Leadership 的 NTU Data Analytics Club、PDAO、GDSC、宜蘭程式教育志工（找不到專屬 logo 就用所屬學校的 logo 或首字母）。
   - 存到 `public/logos/`，路徑填進 `career.json` 既有的 `logoUrl` 欄位。
   - 每個檔案都驗證能正常開啟（上次有壞檔）。找不到的保留首字母 fallback。
   - 預設灰階，hover 轉彩色。
 - **封面：** DDIA 書封、CMU 15-445 縮圖（CMU Database Group logo），存 `public/studying/`，填進 `studyingNow[].imageUrl`。
 - **Experience：**
   - Work + Research 一條時間軸，每項最多 3 bullets（同現在）。
-  - Leadership 放在最後，一行一項：org · role · period。
+  - Leadership 放在最後，一行一項：小 logo + org · role · period。
   - 每項有 `id="exp-<slug>"`。
 - **Projects：**
   - 卡片依 ML Infra → Systems → ML 三個標題分組；tech tags 保留在卡片上。
