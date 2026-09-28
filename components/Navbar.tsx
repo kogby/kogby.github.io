@@ -3,12 +3,10 @@ import Container from "./ui/Container";
 
 export default function Navbar() {
 	const navLinks = [
-		{ name: "Experience", href: "/experience" },
-		{ name: "Projects", href: "/projects" },
-		{ name: "Skills", href: "/skills" },
-		{ name: "Studying", href: "/studying" },
-		{ name: "Life List", href: "/life" },
-		{ name: "Contact", href: "/contact" },
+		{ name: "Experience", href: "/#experience" },
+		{ name: "Projects", href: "/#projects" },
+		{ name: "Learning", href: "/learning" },
+		{ name: "Contact", href: "/#contact" },
 	];
 
 	return (
@@ -19,7 +17,7 @@ export default function Navbar() {
 				</Link>
 
 				{/* ponytail: horizontally scrollable on small screens; hamburger if links grow */}
-				<div className="flex gap-5 sm:gap-8 overflow-x-auto whitespace-nowrap">
+				<div className="flex items-center gap-5 sm:gap-8 overflow-x-auto whitespace-nowrap">
 					{navLinks.map((link) => (
 						<Link
 							key={link.name}
@@ -29,6 +27,14 @@ export default function Navbar() {
 							{link.name}
 						</Link>
 					))}
+					<span aria-hidden className="h-4 w-px shrink-0 bg-gray-300" />
+					<Link
+						href="/writings"
+						className="pr-1 text-lg text-gray-400 hover:text-black transition-colors"
+						style={{ fontFamily: "var(--font-handwriting)" }}
+					>
+						personal
+					</Link>
 				</div>
 			</Container>
 		</nav>

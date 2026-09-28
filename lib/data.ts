@@ -1,5 +1,6 @@
 import career from "@/data/career.json";
 import courseworkData from "@/data/coursework.json";
+import { regionOf } from "@/lib/venn";
 
 // ── Central source of truth ──────────────────────────────────────────────
 // data/career.json is the single source of truth, shared by this website and
@@ -20,20 +21,33 @@ const byPriority = (bullets: Bullet[]): Bullet[] =>
 export const experiencesFull = career.experiences;
 export const projectsFull = career.projects;
 
-// Backward-compatible website shape (components keep working unchanged)
-export const experiences = career.experiences.map((e) => ({
-  id: e.id,
-  role: e.role,
-  company: e.org,
-  period: e.period,
-  description: e.summary,
-  category: e.category,
-  logoUrl: e.logoUrl,
-  bullets: byPriority(e.bullets),
-}));
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+// "May 2026 - Present" → sortable month number. Parsed by hand: Date("May 2026") is not
+// portable (Safari), and this module runs on both server and client.
+const startKey = (period: string) => {
+  const [m, y] = period.split(" - ")[0].split(" ");
+  return Number(y) * 12 + MONTHS.indexOf(m);
+};
+
+// Website shape, newest first
+export const experiences = career.experiences
+  .map((e) => ({
+    id: e.id,
+    slug: e.slug,
+    role: e.role,
+    company: e.org,
+    period: e.period,
+    description: e.summary,
+    category: e.category,
+    logoUrl: e.logoUrl,
+    bullets: byPriority(e.bullets),
+    region: regionOf(e.domains),
+  }))
+  .sort((a, b) => startKey(b.period) - startKey(a.period));
 
 export const projects = career.projects.map((p) => ({
   id: p.id,
+  slug: p.slug,
   title: p.title,
   summary: p.summary,
   tags: p.tech,
@@ -41,14 +55,11 @@ export const projects = career.projects.map((p) => ({
   bullets: byPriority(p.bullets),
   link: p.link,
   metrics: p.metrics,
+  region: regionOf(p.domains),
 }));
 
-export type SkillCategory = { category: string; items: string[] };
-export const skills: SkillCategory[] = career.skills;
-
 // Coursework grouped into themes, ordered by importance. Website-only (not in
-// the resume-facing career.json). Each course carries its school so CMU slots
-// in later by adding entries.
+// the resume-facing career.json). Each course carries its school and course number.
 export type CourseworkTheme = (typeof courseworkData.coursework)[number];
 export const coursework = courseworkData.coursework;
 
@@ -73,13 +84,26 @@ export const socialLinks = [
   { name: "CV", href: "/resume_Jerry_Chen.pdf", icon: "file" },
 ];
 
+export type Writing = {
+  title: string;
+  date: string; // "2026-10"
+  platform: "Substack" | "Medium";
+  url: string;
+  blurb: string;
+};
+
+// Newest first. Posts live on Substack / Medium; the site only keeps the index.
+export const writings: Writing[] = [];
+
+export const writingProfiles = [{ name: "Medium", href: "https://medium.com/@kogby0507" }];
+
 export const studyingNow = [
   {
     id: 1,
     title: "Designing Data-Intensive Applications",
     type: "book" as const,
     author: "Martin Kleppmann",
-    imageUrl: "", // drop in /public/studying/ddia.jpg to show a cover
+    imageUrl: "/studying/ddia.jpg",
 
     link: "https://dataintensive.net/",
   },
@@ -88,23 +112,65 @@ export const studyingNow = [
     title: "CMU 15-445: Database Systems",
     type: "course" as const,
     author: "Andy Pavlo",
-    imageUrl: "", // drop in /public/studying/cmu15445.jpg to show a thumbnail
+    imageUrl: "/studying/cmu15445.png",
 
     link: "https://15445.courses.cs.cmu.edu/",
   },
+  {
+    id: 3,
+    title: "The Almanack of Naval Ravikant",
+    type: "book" as const,
+    author: "Eric Jorgenson",
+    imageUrl: "/studying/naval.jpg",
+    link: "https://www.navalmanack.com/",
+  },
 ];
 
-// Domain categories for the constellation graph
-export const domains = career.domains;
-
-// Projects with domain tags for constellation mapping
-export const projectsWithDomains = career.projects.map((p) => ({
-  id: p.id,
-  title: p.title,
-  summary: p.summary,
-  tags: p.tech,
-  domains: p.domains,
-  description: p.bullets.map((b) => b.text).join(" "),
-  link: p.link,
-  metrics: p.metrics,
-}));
+// Website-only; mirrors the Education section of career-ops/cv.md.
+export const education = [
+  {
+    id: "cmu",
+    school: "Carnegie Mellon University",
+    unit: "School of Computer Science",
+    degree: "Master of Computational Data Science",
+    period: "Summer 2025 - Dec 2026",
+    gpa: "3.88 / 4.00",
+    logoUrl: "/logos/cmu.png",
+    courses: [
+      "LLM Systems",
+      "Machine Learning Systems",
+      "Distributed Systems",
+      "Parallel Computer Architecture and Programming",
+      "Computer Systems",
+      "Cloud Computing",
+      "Machine Learning",
+      "Generative AI",
+      "Foundations of Computational Data Science",
+      "Interactive Data Science",
+    ],
+  },
+  {
+    id: "ntu",
+    school: "National Taiwan University",
+    unit: "",
+    degree: "Bachelor of Information Management",
+    period: "Sep 2020 - Jun 2024",
+    gpa: "3.98 / 4.3",
+    logoUrl: "/logos/ntu.png",
+    courses: [
+      "Operating Systems",
+      "Computer Networks and Applications",
+      "Database",
+      "Data Structures",
+      "Algorithms",
+      "Cryptography",
+      "System Analysis",
+      "Cloud App Development",
+      "Web App Programming",
+      "Modern Data Science",
+      "Deep Learning",
+      "Advanced Statistics",
+      "Linear Algebra",
+    ],
+  },
+];

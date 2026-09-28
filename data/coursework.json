@@ -3,108 +3,226 @@
     {
       "id": "systems-backend",
       "title": "Systems & Backend Engineering",
-      "summary": "The backbone of how I build reliable services — operating systems, networks, databases, and cloud-native web applications.",
-      "learnings": [
-        "OS internals: process scheduling, virtual memory, concurrency, and synchronization",
-        "Networking: the TCP/IP stack, socket programming, HTTP, and routing",
-        "Databases: relational modeling, SQL, indexing, transactions, and normalization",
-        "Full-stack & cloud-native delivery: REST APIs, microservices, containerization, and deployment",
-        "Systems analysis & design: requirements engineering, UML modeling, and the software lifecycle"
-      ],
       "courses": [
-        { "school": "NTU", "code": "IM5072", "name": "Cloud Native Application Development" },
-        { "school": "NTU", "code": "IM5068", "name": "Web Application Programming" },
-        { "school": "NTU", "code": "IM3008", "name": "Database Management" },
-        { "school": "NTU", "code": "IM3010", "name": "Computer Networks and Applications" },
-        { "school": "NTU", "code": "IM2003", "name": "Operating Systems" },
-        { "school": "NTU", "code": "IM3007", "name": "Systems Analysis and Design" },
-        { "school": "NTU", "code": "EE3035", "name": "Web Programming" }
+        {
+          "school": "CMU",
+          "code": "15-642",
+          "name": "Machine Learning Systems"
+        },
+        {
+          "school": "CMU",
+          "code": "15-640",
+          "name": "Distributed Systems"
+        },
+        {
+          "school": "CMU",
+          "code": "15-503",
+          "name": "Computer Systems"
+        },
+        {
+          "school": "CMU",
+          "code": "15-619",
+          "name": "Cloud Computing"
+        },
+        {
+          "school": "CMU",
+          "code": "15-618",
+          "name": "Parallel Computer Architecture and Programming"
+        },
+        {
+          "school": "NTU",
+          "code": "IM5072",
+          "name": "Cloud Native Application Development"
+        },
+        {
+          "school": "NTU",
+          "code": "IM5068",
+          "name": "Web Application Programming"
+        },
+        {
+          "school": "NTU",
+          "code": "IM3008",
+          "name": "Database Management"
+        },
+        {
+          "school": "NTU",
+          "code": "IM3010",
+          "name": "Computer Networks and Applications"
+        },
+        {
+          "school": "NTU",
+          "code": "IM2003",
+          "name": "Operating Systems"
+        },
+        {
+          "school": "NTU",
+          "code": "EE3035",
+          "name": "Web Programming"
+        }
+      ]
+    },
+    {
+      "id": "ml-ai",
+      "title": "Machine Learning & Artificial Intelligence",
+      "courses": [
+        {
+          "school": "CMU",
+          "code": "11-868",
+          "name": "LLM Systems"
+        },
+        {
+          "school": "CMU",
+          "code": "10-601",
+          "name": "Machine Learning"
+        },
+        {
+          "school": "CMU",
+          "code": "10-623",
+          "name": "Generative AI"
+        },
+        {
+          "school": "NTU",
+          "code": "IM5056",
+          "name": "Statistical Learning and Deep Learning"
+        },
+        {
+          "school": "NTU",
+          "code": "IM5062",
+          "name": "Deep Learning and its Applications"
+        },
+        {
+          "school": "NTU",
+          "code": "IM1013",
+          "name": "Data Analysis and Machine Learning with Python"
+        },
+        {
+          "school": "NTU",
+          "code": "IM5055",
+          "name": "Manufacturing Data Science"
+        }
       ]
     },
     {
       "id": "algorithms-foundations",
       "title": "Algorithms & Programming Foundations",
-      "summary": "Core computer-science foundations — data structures, algorithm design, programming paradigms, and cryptography.",
-      "learnings": [
-        "Data structures (trees, graphs, heaps, hash tables) and asymptotic complexity analysis",
-        "Algorithm design: greedy, divide-and-conquer, dynamic programming, and graph algorithms",
-        "Functional programming: immutability, higher-order functions, and recursion",
-        "Cryptography: symmetric/asymmetric encryption, hashing, and the number theory behind them"
-      ],
       "courses": [
-        { "school": "NTU", "code": "IM2009", "name": "Algorithms" },
-        { "school": "NTU", "code": "IM1010", "name": "Data Structures and Advanced Program Design" },
-        { "school": "NTU", "code": "IM2012", "name": "Programming Languages: Functional Programming" },
-        { "school": "NTU", "code": "MATH5425", "name": "Introduction to Cryptography" },
-        { "school": "NTU", "code": "IM1003", "name": "Programming Design" }
+        {
+          "school": "NTU",
+          "code": "IM2009",
+          "name": "Algorithms"
+        },
+        {
+          "school": "NTU",
+          "code": "IM1010",
+          "name": "Data Structures and Advanced Program Design"
+        },
+        {
+          "school": "NTU",
+          "code": "IM2012",
+          "name": "Programming Languages: Functional Programming"
+        },
+        {
+          "school": "NTU",
+          "code": "MATH5425",
+          "name": "Introduction to Cryptography"
+        },
+        {
+          "school": "NTU",
+          "code": "IM1003",
+          "name": "Programming Design"
+        }
       ]
     },
     {
-      "id": "ml-deep-learning",
-      "title": "Machine Learning & Deep Learning",
-      "summary": "From statistical learning theory to deep neural networks, and applying them to real industrial data.",
-      "learnings": [
-        "Supervised & unsupervised learning, model evaluation, and regularization",
-        "Deep learning: CNNs, RNNs, backpropagation, and training/optimization",
-        "Statistical learning theory: the bias–variance tradeoff and ensemble methods",
-        "End-to-end ML pipelines in Python (scikit-learn, PyTorch/TensorFlow)",
-        "Domain application to manufacturing and industrial data"
-      ],
+      "id": "data-science-optimization",
+      "title": "Data Science & Optimization",
       "courses": [
-        { "school": "NTU", "code": "IM5056", "name": "Statistical Learning and Deep Learning" },
-        { "school": "NTU", "code": "IM5062", "name": "Deep Learning and its Applications" },
-        { "school": "NTU", "code": "IM1013", "name": "Data Analysis and Machine Learning with Python" },
-        { "school": "NTU", "code": "IM5055", "name": "Manufacturing Data Science" }
+        {
+          "school": "CMU",
+          "code": "11-637",
+          "name": "Foundations of Computational Data Science"
+        },
+        {
+          "school": "CMU",
+          "code": "05-839",
+          "name": "Interactive Data Science"
+        },
+        {
+          "school": "NTU",
+          "code": "IM2010",
+          "name": "Operations Research"
+        },
+        {
+          "school": "NTU",
+          "code": "IM5066",
+          "name": "Information Economics and Game Theory"
+        },
+        {
+          "school": "NTU",
+          "code": "IM5030",
+          "name": "Introduction to Information Retrieval and Text Mining"
+        },
+        {
+          "school": "NTU",
+          "code": "BA4009",
+          "name": "Data Visualization with Modern Data Science"
+        },
+        {
+          "school": "NTU",
+          "code": "GenEd5011",
+          "name": "Programming and Data Analysis"
+        }
       ]
     },
     {
-      "id": "data-science-analytics",
-      "title": "Data Science & Analytics",
-      "summary": "Turning raw data into insight — analytics, information retrieval, visualization, and applied domain analytics.",
-      "learnings": [
-        "Data wrangling, exploratory analysis, and statistical inference",
-        "Information retrieval and text mining / NLP fundamentals",
-        "Data visualization and data storytelling",
-        "Applied analytics for marketing, social media, and behavioral data"
-      ],
+      "id": "data-analytics-management",
+      "title": "Data Analytics & Management",
       "courses": [
-        { "school": "NTU", "code": "IE5054", "name": "Data Analytics" },
-        { "school": "NTU", "code": "IM5030", "name": "Introduction to Information Retrieval and Text Mining" },
-        { "school": "NTU", "code": "BA4009", "name": "Data Visualization with Modern Data Science" },
-        { "school": "NTU", "code": "IB5082", "name": "Big Data Marketing" },
-        { "school": "NTU", "code": "IM5060", "name": "Social Media Analytics" },
-        { "school": "NTU", "code": "GenEd5011", "name": "Programming and Data Analysis" },
-        { "school": "NTU", "code": "Psy5261", "name": "Psychoinformatics and Neuroinformatics" }
-      ]
-    },
-    {
-      "id": "optimization-decision",
-      "title": "Optimization & Decision Science",
-      "summary": "Mathematical modeling for decision-making — optimization, game theory, and information economics.",
-      "learnings": [
-        "Linear and integer programming and optimization modeling",
-        "Game theory, mechanism design, and information economics",
-        "Decision-making under uncertainty"
-      ],
-      "courses": [
-        { "school": "NTU", "code": "IM2010", "name": "Operations Research" },
-        { "school": "NTU", "code": "IM5066", "name": "Information Economics and Game Theory" }
-      ]
-    },
-    {
-      "id": "capstone-projects",
-      "title": "Capstone & Team Projects",
-      "summary": "Multi-semester, team-based software projects taking a product from requirements to delivery.",
-      "learnings": [
-        "Full project lifecycle: requirements, design, implementation, and delivery",
-        "Cross-functional teamwork and project management",
-        "3D and interactive media creation for the metaverse"
-      ],
-      "courses": [
-        { "school": "NTU", "code": "IM4001", "name": "Project on Information Management II" },
-        { "school": "NTU", "code": "IM3009", "name": "Project on Information Management I" },
-        { "school": "NTU", "code": "IM1009", "name": "IM Freshman Project" },
-        { "school": "NTU", "code": "IM5063", "name": "Introduction to 3D Creation for the Metaverse" }
+        {
+          "school": "NTU",
+          "code": "IE5054",
+          "name": "Data Analytics"
+        },
+        {
+          "school": "NTU",
+          "code": "IB5082",
+          "name": "Big Data Marketing"
+        },
+        {
+          "school": "NTU",
+          "code": "IM5060",
+          "name": "Social Media Analytics"
+        },
+        {
+          "school": "NTU",
+          "code": "IM3007",
+          "name": "Systems Analysis and Design"
+        },
+        {
+          "school": "NTU",
+          "code": "Psy5261",
+          "name": "Psychoinformatics and Neuroinformatics"
+        },
+        {
+          "school": "NTU",
+          "code": "IM4001",
+          "name": "Project on Information Management II"
+        },
+        {
+          "school": "NTU",
+          "code": "IM3009",
+          "name": "Project on Information Management I"
+        },
+        {
+          "school": "NTU",
+          "code": "IM1009",
+          "name": "IM Freshman Project"
+        },
+        {
+          "school": "NTU",
+          "code": "IM5063",
+          "name": "Introduction to 3D Creation for the Metaverse"
+        }
       ]
     }
   ]

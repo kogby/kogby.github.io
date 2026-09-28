@@ -1,0 +1,190 @@
+"use client";
+
+import { useState } from "react";
+import { experiences, projects } from "@/lib/data";
+import { REGIONS, type Region } from "@/lib/venn";
+
+// Two circles r=190, centers 180 apart; the lens between them is ML Infra.
+const R = 190;
+const CY = 245;
+const LX = 310;
+const RX = 490;
+const HALF = Math.sqrt(R * R - ((RX - LX) / 2) ** 2);
+const LENS = `M 400 ${CY - HALF} A ${R} ${R} 0 0 1 400 ${CY + HALF} A ${R} ${R} 0 0 1 400 ${CY - HALF} Z`;
+
+// Each region's dots stack in one column around COL_Y, zigzagging slightly. Spacing shrinks so a
+// column never spans more than MAX_SPAN (keeps 7+ dots inside the circle).
+const COL_X: Record<Region, number> = { systems: 225, mlinfra: 400, ml: 575 };
+const COL_Y = 305;
+const GAP = 34;
+const MAX_SPAN = 180;
+const ACCENT = "var(--accent-primary)";
+const REGION_LABEL = Object.fromEntries(REGIONS.map((r) => [r.id, r.label])) as Record<Region, string>;
+
+const SIDES = [
+	{ region: "systems" as const, x: 245, title: "Systems", sub: ["Distributed Systems", "Cloud Infra"] },
+	{ region: "ml" as const, x: 555, title: "Machine Learning", sub: ["Data Science", "ML Engineering"] },
+];
+
+type Dot = { key: string; anchor: string; label: string; kind: "project" | "experience"; region: Region };
+
+const dots: Dot[] = [
+	...experiences
+		.filter((e) => e.category !== "Leadership")
+		.map((e) => ({
+			key: `e${e.id}`,
+			anchor: `exp-${e.slug}`,
+			label: `${e.company} · ${e.role}`,
+			kind: "experience" as const,
+			region: e.region,
+		})),
+	...projects.map((p) => ({
+		key: `p${p.id}`,
+		anchor: `project-${p.slug}`,
+		label: p.title,
+		kind: "project" as const,
+		region: p.region,
+	})),
+];
+
+const placed = dots.map((d) => {
+	const col = dots.filter((o) => o.region === d.region);
+	const i = col.indexOf(d);
+	const gap = Math.min(GAP, MAX_SPAN / Math.max(col.length - 1, 1));
+	return { ...d, x: COL_X[d.region] + (i % 2 ? 12 : -12), y: COL_Y + (i - (col.length - 1) / 2) * gap };
+});
+
+function jump(id: string) {
+	// Experience shows one tab at a time; it switches synchronously if the target is on the hidden tab.
+	window.dispatchEvent(new CustomEvent("venn:reveal", { detail: id }));
+	const el = document.getElementById(id);
+	if (!el) return;
+	const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+	el.focus({ preventScroll: true }); // keyboard users continue from the card, not the map
+	el.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" });
+	el.classList.remove("flash");
+
+	// Flash once scrolling has been quiet for 120ms, so the outline is bright on arrival.
+	// (Debounced scroll rather than `scrollend`, which Safari lacks.)
+	let timer = window.setTimeout(flash, 120); // covers "already in place, no scroll"
+	function onScroll() {
+		clearTimeout(timer);
+		timer = window.setTimeout(flash, 120);
+	}
+	function flash() {
+		window.removeEventListener("scroll", onScroll);
+		void el!.offsetWidth; // restart the animation on repeat clicks
+		el!.classList.add("flash");
+	}
+	window.addEventListener("scroll", onScroll, { passive: true });
+}
+
+export default function VennMap() {
+	const [active, setActive] = useState<Region | null>(null);
+	const [hovered, setHovered] = useState<Dot | null>(null);
+
+	const lineColor = (r: Region) => (active === r ? ACCENT : "#111");
+	const focus = (d: Dot | null) => {
+		setHovered(d);
+		setActive(d?.region ?? null);
+	};
+
+	return (
+		<div>
+				<svg
+					viewBox="110 40 580 410"
+					className="-mx-6 w-[calc(100%+3rem)] max-w-none sm:mx-auto sm:w-full sm:max-w-2xl h-auto select-none"
+					style={{ fontFamily: "var(--font-sans)" }}
+					onPointerLeave={() => focus(null)}
+					role="group"
+					aria-label="Venn diagram of experiences and projects across Systems and Machine Learning"
+				>
+					{/* Hit areas: circles first, lens on top so the overlap wins. */}
+					<circle
+						cx={LX}
+						cy={CY}
+						r={R}
+						fill="transparent"
+						stroke={lineColor("systems")}
+						strokeOpacity={0.7}
+						strokeWidth={1.25}
+						onPointerEnter={() => setActive("systems")}
+						style={{ transition: "stroke .3s" }}
+					/>
+					<circle
+						cx={RX}
+						cy={CY}
+						r={R}
+						fill="transparent"
+						stroke={lineColor("ml")}
+						strokeOpacity={0.7}
+						strokeWidth={1.25}
+						onPointerEnter={() => setActive("ml")}
+						style={{ transition: "stroke .3s" }}
+					/>
+					<path
+						d={LENS}
+						fill="transparent"
+						stroke={active === "mlinfra" ? ACCENT : "none"}
+						strokeWidth={1.25}
+						onPointerEnter={() => setActive("mlinfra")}
+					/>
+
+					{SIDES.map((s) => (
+						<g key={s.region} pointerEvents="none">
+							<text x={s.x} y={140} textAnchor="middle" fontSize={18} fontWeight={600} fill={active === s.region ? ACCENT : "#111"}>
+								{s.title}
+							</text>
+							{s.sub.map((t, i) => (
+								<text key={t} x={s.x} y={160 + i * 17} textAnchor="middle" fontSize={14} fill="#666">
+									{t}
+								</text>
+							))}
+						</g>
+					))}
+					<text x={400} y={235} textAnchor="middle" fontSize={16} fontWeight={700} fill={ACCENT} pointerEvents="none">
+						ML Infra
+					</text>
+
+					{placed.map((d) => {
+						const lit = active === null || active === d.region;
+						const color = active !== null && lit ? ACCENT : "#111";
+						return (
+							<a
+								key={d.key}
+								href={`#${d.anchor}`}
+								aria-label={`${d.label} (${d.kind}, ${REGION_LABEL[d.region]})`}
+								onClick={(e) => {
+									e.preventDefault();
+									jump(d.anchor);
+								}}
+								onPointerEnter={() => focus(d)}
+								onFocus={() => focus(d)}
+								onBlur={() => focus(null)}
+								style={{ cursor: "pointer" }}
+							>
+								<circle cx={d.x} cy={d.y} r={13} fill="transparent" />
+								<circle
+									cx={d.x}
+									cy={d.y}
+									r={hovered?.key === d.key ? 8.5 : 7}
+									fill={d.kind === "project" ? color : "var(--background)"}
+									stroke={color}
+									strokeWidth={1.5}
+									opacity={lit ? 1 : 0.2}
+									style={{ transition: "all .3s" }}
+								/>
+							</a>
+						);
+					})}
+				</svg>
+
+				<p className="mt-4 text-center text-sm text-gray-600 min-h-5">
+					{hovered
+						? `${hovered.kind === "project" ? "●" : "○"} ${hovered.label}`
+						: "Hover a dot to see what it is. Click to jump to it."}
+				</p>
+				<p className="mt-1 text-center text-xs text-gray-400">● project&nbsp;&nbsp;&nbsp;○ experience</p>
+		</div>
+	);
+}

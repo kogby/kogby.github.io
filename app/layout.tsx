@@ -3,6 +3,7 @@ import { Inter, Caveat } from "next/font/google";
 import Script from "next/script";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import GridBackground from "@/components/GridBackground";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
@@ -11,7 +12,7 @@ const caveat = Caveat({ subsets: ["latin"], variable: "--font-caveat" });
 export const metadata: Metadata = {
   title: "Jerry Chen (kogby) | ML Infra & Backend Engineer",
   description:
-    "Jerry Chen — CMU MS student working on LLM inference serving, distributed systems, and cloud infrastructure. Open to AI/Cloud Infra, MLE & Solutions Architect roles.",
+    "Jerry Chen — CMU MS student working on LLM inference serving, distributed systems, and cloud infrastructure. Open to AI/Cloud Infra SWE or MLE roles.",
   openGraph: {
     title: "Jerry Chen (kogby) | ML Infra & Backend Engineer",
     description:
@@ -28,8 +29,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <body className={`${inter.variable} ${caveat.variable} antialiased min-h-screen flex flex-col`}>
+    <html lang="en" className={`${inter.variable} ${caveat.variable} scroll-smooth motion-reduce:scroll-auto`}>
+      <body className="antialiased min-h-screen flex flex-col">
+        <GridBackground />
         <Navbar />
         <main className="flex-grow pt-20">
           {children}

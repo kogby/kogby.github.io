@@ -32,7 +32,7 @@ export default function Studying() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="group flex gap-5 p-5 border border-gray-200 rounded-xl hover:border-black/20 hover:shadow-lg transition-all duration-300"
+              className="group flex gap-5 p-5 bg-white border border-gray-200 rounded-xl hover:border-black/20 hover:shadow-lg transition-all duration-300"
             >
               {/* Book / Course thumbnail */}
               <div className="w-20 h-28 flex-shrink-0 bg-gray-100 rounded-lg overflow-hidden flex items-center justify-center border border-gray-100">
@@ -42,7 +42,11 @@ export default function Studying() {
                     alt={item.title}
                     loading="lazy"
                     onError={() => setFailed((f) => ({ ...f, [item.id]: true }))}
-                    className="w-full h-full object-cover"
+                    // A static-HTML <img> can fail before hydration attaches onError; catch that on mount.
+                    ref={(img) => {
+                      if (img?.complete && img.naturalWidth === 0) setFailed((f) => ({ ...f, [item.id]: true }));
+                    }}
+                    className={`w-full h-full ${item.type === "book" ? "object-cover" : "object-contain p-2 bg-white"}`}
                   />
                 ) : (
                   <div className="text-gray-300">

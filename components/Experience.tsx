@@ -1,130 +1,88 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useState } from "react";
+import { flushSync } from "react-dom";
+import { motion } from "framer-motion";
 import Container from "./ui/Container";
 import { highlightMetrics } from "./ui/Metric";
+import CompanyLogo from "./ui/CompanyLogo";
+import SlideToggle from "./ui/SlideToggle";
 import { experiences } from "@/lib/data";
 
-// Logo with line-art fallback: missing files render as an initial in a circle,
-// matching the site's geometric-minimalism style.
-function CompanyLogo({ src, name, size }: { src: string; name: string; size: string }) {
-	const [failed, setFailed] = useState(false);
-	return (
-		<div
-			className={`${size} relative bg-white rounded-full border border-gray-200 overflow-hidden flex items-center justify-center`}
-		>
-			{src && !failed ? (
-				<img
-					src={src}
-					alt={`${name} logo`}
-					onError={() => setFailed(true)}
-					className="w-full h-full object-contain p-1.5"
-				/>
-			) : (
-				<span className="text-sm font-semibold text-gray-400 select-none">
-					{name.charAt(0)}
-				</span>
-			)}
-		</div>
-	);
-}
+const TABS = ["Work", "Research", "Leadership"] as const;
+type Tab = (typeof TABS)[number];
+
 
 export default function Experience() {
-	const [activeTab, setActiveTab] = useState<"Work" | "Research" | "Leadership">("Work");
+	const [tab, setTab] = useState<Tab>("Work");
 
-	const filteredExperiences = experiences.filter(
-		(exp) => exp.category === activeTab
-	);
+	// The venn map fires "venn:reveal" before jumping; switch tabs synchronously so the target exists.
+	useEffect(() => {
+		const onReveal = (e: Event) => {
+			const exp = experiences.find((x) => `exp-${x.slug}` === (e as CustomEvent<string>).detail);
+			if (exp) flushSync(() => setTab(exp.category as Tab));
+		};
+		window.addEventListener("venn:reveal", onReveal);
+		return () => window.removeEventListener("venn:reveal", onReveal);
+	}, []);
 
 	return (
 		<section id="experience" className="py-20 border-t border-gray-200">
 			<Container>
-				<div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-					<motion.div
-						initial={{ opacity: 0, x: -20 }}
-						whileInView={{ opacity: 1, x: 0 }}
-						viewport={{ once: true }}
-					>
+				<div className="mb-16 flex flex-wrap items-end justify-between gap-6">
+					<motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
 						<h2 className="text-3xl font-bold tracking-tight mb-4">Experience</h2>
 						<div className="h-1 w-20 bg-black"></div>
 					</motion.div>
 
-					<div className="flex bg-gray-100 p-1 rounded-full w-fit">
-						{["Work", "Research", "Leadership"].map((tab) => (
-							<button
-								key={tab}
-								onClick={() => setActiveTab(tab as "Work" | "Research" | "Leadership")}
-								className={`relative px-6 py-2 rounded-full text-sm font-medium transition-colors ${activeTab === tab ? "text-white" : "text-gray-600 hover:text-gray-900"
-									}`}
-							>
-								{activeTab === tab && (
-									<motion.div
-										layoutId="activeTab"
-										className="absolute inset-0 bg-black rounded-full"
-										transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-									/>
-								)}
-								<span className="relative z-10">{tab}</span>
-							</button>
-						))}
-					</div>
+					<SlideToggle id="experienceTab" options={TABS.map((t) => ({ value: t, label: t }))} value={tab} onChange={setTab} />
 				</div>
 
-				<div className="space-y-12 min-h-[400px]">
-					<AnimatePresence mode="wait">
+				<motion.div key={tab} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
+					{experiences.filter((e) => e.category === tab).map((exp) => (
 						<motion.div
-							key={activeTab}
-							initial={{ opacity: 0, y: 10 }}
-							animate={{ opacity: 1, y: 0 }}
-							exit={{ opacity: 0, y: -10 }}
-							transition={{ duration: 0.2 }}
-							className="space-y-12"
+							key={exp.id}
+							id={`exp-${exp.slug}`}
+							tabIndex={-1}
+							initial={{ opacity: 0, y: 20 }}
+							whileInView={{ opacity: 1, y: 0 }}
+							viewport={{ once: true }}
+							className="group grid grid-cols-[1fr] md:grid-cols-[170px_48px_1fr] gap-4 md:gap-6 bg-white p-6 md:p-8 border border-gray-200 hover:border-black/20 hover:shadow-xl transition-all duration-300 rounded-xl"
 						>
-							{filteredExperiences.map((exp, index) => (
-								<motion.div
-									key={exp.id}
-									initial={{ opacity: 0, y: 20 }}
-									animate={{ opacity: 1, y: 0 }}
-									transition={{ delay: index * 0.1 }}
-									className="grid grid-cols-[1fr] md:grid-cols-[150px_60px_1fr] gap-4 md:gap-8 border-b border-gray-50 pb-8 last:border-0"
-								>
-									<div className="md:text-right">
-										<p className="text-sm font-medium text-gray-500 font-mono tracking-tight">{exp.period}</p>
-									</div>
+							<div className="md:text-right">
+								<p className="text-sm font-medium text-gray-500 font-mono tracking-tight whitespace-nowrap">{exp.period}</p>
+							</div>
 
-									<div className="hidden md:flex justify-center">
-										<CompanyLogo src={exp.logoUrl} name={exp.company} size="w-12 h-12" />
-									</div>
+							<div className="hidden md:flex justify-center">
+								<CompanyLogo src={exp.logoUrl} name={exp.company} size="w-12 h-12" />
+							</div>
 
-									<div className="space-y-2 relative">
-										{/* Mobile Logo View */}
-										<div className="md:hidden flex items-center gap-3 mb-2">
-											<CompanyLogo src={exp.logoUrl} name={exp.company} size="w-10 h-10" />
-											<h3 className="text-lg font-semibold">{exp.company}</h3>
-										</div>
+							<div className="space-y-2 relative">
+								{/* Mobile Logo View */}
+								<div className="md:hidden flex items-center gap-3 mb-2">
+									<CompanyLogo src={exp.logoUrl} name={exp.company} size="w-10 h-10" />
+									<h3 className="text-lg font-semibold">{exp.company}</h3>
+								</div>
 
-										<h3 className="hidden md:block text-lg font-semibold">{exp.company}</h3>
-										<p className="text-black font-medium">{exp.role}</p>
+								<h3 className="hidden md:block text-lg font-semibold">{exp.company}</h3>
+								<p className="text-black font-medium">{exp.role}</p>
 
-										{exp.bullets.length > 0 ? (
-											<ul className="mt-2 space-y-1.5">
-												{exp.bullets.slice(0, 3).map((bullet, i) => (
-													<li key={i} className="flex gap-2.5 text-sm text-gray-600 leading-relaxed">
-														<span className="mt-2 h-1 w-1 flex-shrink-0 rounded-full bg-gray-400" />
-														<span>{highlightMetrics(bullet.text)}</span>
-													</li>
-												))}
-											</ul>
-										) : (
-											<p className="text-gray-600 leading-relaxed text-sm">{exp.description}</p>
-										)}
-									</div>
-								</motion.div>
-							))}
+								{exp.bullets.length > 0 ? (
+									<ul className="mt-2 space-y-1.5">
+										{exp.bullets.map((bullet, i) => (
+											<li key={i} className="flex gap-2.5 text-sm text-gray-600 leading-relaxed">
+												<span className="mt-2 h-1 w-1 flex-shrink-0 rounded-full bg-gray-400" />
+												<span>{highlightMetrics(bullet.text)}</span>
+											</li>
+										))}
+									</ul>
+								) : (
+									<p className="text-gray-600 leading-relaxed text-sm">{exp.description}</p>
+								)}
+							</div>
 						</motion.div>
-					</AnimatePresence>
-				</div>
+					))}
+				</motion.div>
 			</Container>
 		</section>
 	);

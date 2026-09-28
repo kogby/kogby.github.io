@@ -2,7 +2,7 @@
 
 :root {
   /* Modern Minimalism Palette - Swiss Style */
-  --background: #ffffff;
+  --background: #fafaf8;
   --foreground: #111111;
   
   /* Accents */
@@ -17,6 +17,10 @@
 
   /* Borders / Dividers */
   --border-light: #eaeaea;
+
+  /* Graph-paper background */
+  --grid-line: rgb(0 0 0 / 0.045);
+  --grid-glow: rgb(76 29 149 / 0.55);
 }
 
 @theme {
@@ -38,7 +42,13 @@
 
 body {
   color: var(--foreground);
-  background: var(--background);
+  background-color: var(--background);
+  /* 1px lines, not a visual gradient. Fixed so the glow layer's grid stays aligned while scrolling. */
+  background-image:
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 24px 24px;
+  background-attachment: fixed;
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -48,4 +58,39 @@ body {
 ::-webkit-scrollbar {
   width: 0px;
   background: transparent;
+}
+
+/* Keep anchored sections clear of the fixed nav. */
+section[id] {
+  scroll-margin-top: 5rem;
+}
+
+/* Venn-map jump target: added once the smooth scroll lands (VennMap.tsx), holds, then fades. */
+@keyframes flash {
+  0%, 40% { outline-color: var(--accent-primary); }
+  100% { outline-color: transparent; }
+}
+.flash {
+  outline: 2px solid transparent;
+  outline-offset: 6px;
+  border-radius: 0.75rem;
+  animation: flash 1.6s ease-out;
+}
+
+/* Same grid in violet, revealed only in a soft circle around the cursor (GridBackground.tsx). */
+.grid-glow {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, var(--grid-glow) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-glow) 1px, transparent 1px);
+  background-size: 24px 24px;
+  mask-image: radial-gradient(circle 260px at var(--mx, -999px) var(--my, -999px), #000 25%, transparent);
+}
+@media (hover: none), (prefers-reduced-motion: reduce) {
+  .grid-glow {
+    display: none;
+  }
 }
