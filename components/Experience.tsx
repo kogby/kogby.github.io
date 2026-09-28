@@ -19,6 +19,10 @@ function CompanyLogo({ src, name, size }: { src: string; name: string; size: str
 					src={src}
 					alt={`${name} logo`}
 					onError={() => setFailed(true)}
+					// A static-HTML <img> can fail before hydration attaches onError; catch that on mount.
+					ref={(img) => {
+						if (img?.complete && img.naturalWidth === 0) setFailed(true);
+					}}
 					className="w-full h-full object-contain p-1.5 grayscale transition group-hover:grayscale-0"
 				/>
 			) : (
@@ -52,6 +56,7 @@ export default function Experience() {
 						<motion.div
 							key={exp.id}
 							id={`exp-${exp.slug}`}
+							tabIndex={-1}
 							initial={{ opacity: 0, y: 20 }}
 							whileInView={{ opacity: 1, y: 0 }}
 							viewport={{ once: true }}
@@ -99,6 +104,7 @@ export default function Experience() {
 						<li
 							key={exp.id}
 							id={`exp-${exp.slug}`}
+							tabIndex={-1}
 							className="group flex flex-wrap items-center gap-x-3 gap-y-1 text-sm"
 						>
 							<CompanyLogo src={exp.logoUrl} name={exp.company} size="w-8 h-8" />

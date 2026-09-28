@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import Container from "./ui/Container";
 import { experiences, projects } from "@/lib/data";
-import type { Region } from "@/lib/venn";
+import { REGIONS, type Region } from "@/lib/venn";
 
 // Two circles r=190, centers 180 apart; the lens between them is ML Infra.
 const R = 190;
@@ -19,6 +19,7 @@ const COL_X: Record<Region, number> = { systems: 225, mlinfra: 400, ml: 575 };
 const COL_Y = 305;
 const GAP = 34;
 const ACCENT = "var(--accent-primary)";
+const REGION_LABEL = Object.fromEntries(REGIONS.map((r) => [r.id, r.label])) as Record<Region, string>;
 
 const SIDES = [
 	{ region: "systems" as const, x: 245, title: "Systems", sub: ["Distributed Systems", "Cloud Infra", "Data Engineering"] },
@@ -56,10 +57,23 @@ function jump(id: string) {
 	const el = document.getElementById(id);
 	if (!el) return;
 	const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+	el.focus({ preventScroll: true }); // keyboard users continue from the card, not the map
 	el.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" });
 	el.classList.remove("flash");
-	void el.offsetWidth; // restart the animation on repeat clicks
-	el.classList.add("flash");
+
+	// Flash once scrolling has been quiet for 120ms, so the outline is bright on arrival.
+	// (Debounced scroll rather than `scrollend`, which Safari lacks.)
+	let timer = window.setTimeout(flash, 120); // covers "already in place, no scroll"
+	function onScroll() {
+		clearTimeout(timer);
+		timer = window.setTimeout(flash, 120);
+	}
+	function flash() {
+		window.removeEventListener("scroll", onScroll);
+		void el!.offsetWidth; // restart the animation on repeat clicks
+		el!.classList.add("flash");
+	}
+	window.addEventListener("scroll", onScroll, { passive: true });
 }
 
 export default function VennMap() {
@@ -130,7 +144,7 @@ export default function VennMap() {
 								{s.title}
 							</text>
 							{s.sub.map((t, i) => (
-								<text key={t} x={s.x} y={160 + i * 16} textAnchor="middle" fontSize={12} fill="#888">
+								<text key={t} x={s.x} y={160 + i * 17} textAnchor="middle" fontSize={14} fill="#666">
 									{t}
 								</text>
 							))}
@@ -147,7 +161,7 @@ export default function VennMap() {
 							<a
 								key={d.key}
 								href={`#${d.anchor}`}
-								aria-label={d.label}
+								aria-label={`${d.label} (${d.kind}, ${REGION_LABEL[d.region]})`}
 								onClick={(e) => {
 									e.preventDefault();
 									jump(d.anchor);

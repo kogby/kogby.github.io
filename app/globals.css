@@ -65,16 +65,16 @@ section[id] {
   scroll-margin-top: 5rem;
 }
 
-/* Venn-map jump target: violet outline fades after the smooth scroll lands. */
+/* Venn-map jump target: added once the smooth scroll lands (VennMap.tsx), holds, then fades. */
 @keyframes flash {
-  from { outline-color: var(--accent-primary); }
-  to { outline-color: transparent; }
+  0%, 40% { outline-color: var(--accent-primary); }
+  100% { outline-color: transparent; }
 }
 .flash {
   outline: 2px solid transparent;
   outline-offset: 6px;
   border-radius: 0.75rem;
-  animation: flash 1.2s ease-out 0.4s backwards;
+  animation: flash 1.6s ease-out;
 }
 
 /* Same grid in violet, revealed only in a soft circle around the cursor (GridBackground.tsx). */

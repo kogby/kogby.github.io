@@ -12,7 +12,7 @@ export default function Contact() {
 
 				<a
 					href="mailto:chen.jerry.cj@gmail.com"
-					className="text-3xl md:text-5xl font-bold hover:text-blue-700 transition-colors tracking-tight underline decoration-gray-200 underline-offset-8 hover:decoration-blue-700"
+					className="text-xl sm:text-3xl md:text-5xl break-words font-bold hover:text-blue-700 transition-colors tracking-tight underline decoration-gray-200 underline-offset-8 hover:decoration-blue-700"
 				>
 					chen.jerry.cj@gmail.com
 				</a>
