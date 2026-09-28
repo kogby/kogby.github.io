@@ -14,10 +14,12 @@ const RX = 490;
 const HALF = Math.sqrt(R * R - ((RX - LX) / 2) ** 2);
 const LENS = `M 400 ${CY - HALF} A ${R} ${R} 0 0 1 400 ${CY + HALF} A ${R} ${R} 0 0 1 400 ${CY - HALF} Z`;
 
-// Each region's dots stack in one column around COL_Y, zigzagging slightly.
+// Each region's dots stack in one column around COL_Y, zigzagging slightly. Spacing shrinks so a
+// column never spans more than MAX_SPAN (keeps 7+ dots inside the circle).
 const COL_X: Record<Region, number> = { systems: 225, mlinfra: 400, ml: 575 };
 const COL_Y = 305;
 const GAP = 34;
+const MAX_SPAN = 180;
 const ACCENT = "var(--accent-primary)";
 const REGION_LABEL = Object.fromEntries(REGIONS.map((r) => [r.id, r.label])) as Record<Region, string>;
 
@@ -50,7 +52,8 @@ const dots: Dot[] = [
 const placed = dots.map((d) => {
 	const col = dots.filter((o) => o.region === d.region);
 	const i = col.indexOf(d);
-	return { ...d, x: COL_X[d.region] + (i % 2 ? 12 : -12), y: COL_Y + (i - (col.length - 1) / 2) * GAP };
+	const gap = Math.min(GAP, MAX_SPAN / Math.max(col.length - 1, 1));
+	return { ...d, x: COL_X[d.region] + (i % 2 ? 12 : -12), y: COL_Y + (i - (col.length - 1) / 2) * gap };
 });
 
 function jump(id: string) {

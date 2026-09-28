@@ -6,7 +6,7 @@ import { regionOf } from "../lib/venn.ts";
 const career = JSON.parse(readFileSync(new URL("../data/career.json", import.meta.url), "utf8"));
 
 const expected: Record<string, string> = {
-  "amazon-swe": "mlinfra",
+  "amazon-swe": "systems",
   "uber-cmu-pdl": "mlinfra",
   "flashinfer-gpu-kernels": "mlinfra",
   "line-backend": "systems",

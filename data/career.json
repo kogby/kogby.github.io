@@ -20,7 +20,7 @@
       "org": "Amazon",
       "period": "May 2026 - Aug 2026",
       "category": "Work",
-      "domains": ["backend", "distributed", "mlinfra"],
+      "domains": ["backend", "distributed"],
       "tech": ["AWS", "Serverless", "Event-Driven", "LLM"],
       "summary": "Architected a distributed, event-driven serverless system on AWS with an LLM oncall agent.",
       "bullets": [

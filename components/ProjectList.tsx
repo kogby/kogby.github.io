@@ -7,13 +7,18 @@ import Container from "./ui/Container";
 import { highlightMetrics } from "./ui/Metric";
 import SlideToggle from "./ui/SlideToggle";
 import { projects } from "@/lib/data";
-import { REGIONS, type Region } from "@/lib/venn";
+import type { Region } from "@/lib/venn";
 
-type Filter = Region | "all";
-// Short labels so the four options fit a 360px phone; group headings keep the full names.
+// Projects use two groups: ML Infra folds into Systems here (the venn map keeps the overlap).
+type Group = "systems" | "ml";
+type Filter = Group | "all";
+const GROUPS: { id: Group; label: string }[] = [
+	{ id: "systems", label: "Systems" },
+	{ id: "ml", label: "Machine Learning" },
+];
+const groupOf = (r: Region): Group => (r === "ml" ? "ml" : "systems");
 const FILTERS: { value: Filter; label: string }[] = [
 	{ value: "all", label: "All" },
-	{ value: "mlinfra", label: "ML Infra" },
 	{ value: "systems", label: "Systems" },
 	{ value: "ml", label: "ML" },
 ];
@@ -25,7 +30,7 @@ export default function ProjectList() {
 	useEffect(() => {
 		const onReveal = (e: Event) => {
 			const p = projects.find((x) => `project-${x.slug}` === (e as CustomEvent<string>).detail);
-			if (p) flushSync(() => setFilter((f) => (f === "all" || f === p.region ? f : p.region)));
+			if (p) flushSync(() => setFilter((f) => (f === "all" || f === groupOf(p.region) ? f : groupOf(p.region))));
 		};
 		window.addEventListener("venn:reveal", onReveal);
 		return () => window.removeEventListener("venn:reveal", onReveal);
@@ -44,8 +49,8 @@ export default function ProjectList() {
 				</div>
 
 				<motion.div key={filter} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-14">
-					{REGIONS.filter((r) => filter === "all" || r.id === filter).map((r) => {
-						const list = projects.filter((p) => p.region === r.id);
+					{GROUPS.filter((g) => filter === "all" || g.id === filter).map((r) => {
+						const list = projects.filter((p) => groupOf(p.region) === r.id);
 						return (
 							list.length > 0 && (
 								<div key={r.id}>
