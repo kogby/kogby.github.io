@@ -42,7 +42,7 @@ export default function Studying() {
                     alt={item.title}
                     loading="lazy"
                     onError={() => setFailed((f) => ({ ...f, [item.id]: true }))}
-                    className="w-full h-full object-cover"
+                    className={`w-full h-full ${item.type === "book" ? "object-cover" : "object-contain p-2 bg-white"}`}
                   />
                 ) : (
                   <div className="text-gray-300">

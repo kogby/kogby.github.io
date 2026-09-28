@@ -107,7 +107,7 @@ export const studyingNow = [
     title: "Designing Data-Intensive Applications",
     type: "book" as const,
     author: "Martin Kleppmann",
-    imageUrl: "", // drop in /public/studying/ddia.jpg to show a cover
+    imageUrl: "/studying/ddia.jpg",
 
     link: "https://dataintensive.net/",
   },
@@ -116,7 +116,7 @@ export const studyingNow = [
     title: "CMU 15-445: Database Systems",
     type: "course" as const,
     author: "Andy Pavlo",
-    imageUrl: "", // drop in /public/studying/cmu15445.jpg to show a thumbnail
+    imageUrl: "/studying/cmu15445.png",
 
     link: "https://15445.courses.cs.cmu.edu/",
   },
