@@ -25,6 +25,16 @@
           "name": "Cloud Computing"
         },
         {
+          "school": "CMU",
+          "code": "15-618",
+          "name": "Parallel Computer Architecture and Programming"
+        },
+        {
+          "school": "CMU",
+          "code": "15-712",
+          "name": "Advanced Operating Systems and Distributed Systems"
+        },
+        {
           "school": "NTU",
           "code": "IM5072",
           "name": "Cloud Native Application Development"
@@ -132,6 +142,16 @@
       "id": "data-science-optimization",
       "title": "Data Science & Optimization",
       "courses": [
+        {
+          "school": "CMU",
+          "code": "11-637",
+          "name": "Foundations of Computational Data Science"
+        },
+        {
+          "school": "CMU",
+          "code": "05-839",
+          "name": "Interactive Data Science"
+        },
         {
           "school": "NTU",
           "code": "IM2010",

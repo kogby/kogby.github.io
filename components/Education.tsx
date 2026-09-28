@@ -26,9 +26,9 @@ export default function Education() {
 							initial={{ opacity: 0, y: 20 }}
 							whileInView={{ opacity: 1, y: 0 }}
 							viewport={{ once: true }}
-							className="grid grid-cols-[1fr] md:grid-cols-[150px_60px_1fr] gap-4 md:gap-8"
+							className="grid grid-cols-[1fr] md:grid-cols-[190px_60px_1fr] gap-4 md:gap-8"
 						>
-							<p className="md:text-right text-sm font-medium text-gray-500 font-mono tracking-tight">{ed.period}</p>
+							<p className="md:text-right text-sm font-medium text-gray-500 font-mono tracking-tight whitespace-nowrap">{ed.period}</p>
 
 							<div className="hidden md:flex justify-center">
 								<CompanyLogo src={ed.logoUrl} name={ed.school} size="w-12 h-12" />

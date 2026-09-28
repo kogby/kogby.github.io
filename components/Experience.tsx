@@ -68,10 +68,10 @@ export default function Experience() {
 							initial={{ opacity: 0, y: 20 }}
 							whileInView={{ opacity: 1, y: 0 }}
 							viewport={{ once: true }}
-							className="group grid grid-cols-[1fr] md:grid-cols-[150px_60px_1fr] gap-4 md:gap-8 border-b border-gray-100 pb-8 last:border-0"
+							className="group grid grid-cols-[1fr] md:grid-cols-[190px_60px_1fr] gap-4 md:gap-8 border-b border-gray-100 pb-8 last:border-0"
 						>
 							<div className="md:text-right">
-								<p className="text-sm font-medium text-gray-500 font-mono tracking-tight">{exp.period}</p>
+								<p className="text-sm font-medium text-gray-500 font-mono tracking-tight whitespace-nowrap">{exp.period}</p>
 							</div>
 
 							<div className="hidden md:flex justify-center">
