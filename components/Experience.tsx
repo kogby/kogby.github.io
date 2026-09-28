@@ -7,7 +7,7 @@ import { highlightMetrics } from "./ui/Metric";
 import { experiences } from "@/lib/data";
 
 // Logo with line-art fallback: missing files render as an initial in a circle,
-// matching the site's geometric-minimalism style. Grayscale until the row is hovered.
+// matching the site's geometric-minimalism style.
 function CompanyLogo({ src, name, size }: { src: string; name: string; size: string }) {
 	const [failed, setFailed] = useState(false);
 	return (
@@ -23,7 +23,7 @@ function CompanyLogo({ src, name, size }: { src: string; name: string; size: str
 					ref={(img) => {
 						if (img?.complete && img.naturalWidth === 0) setFailed(true);
 					}}
-					className="w-full h-full object-contain p-1.5 grayscale transition group-hover:grayscale-0"
+					className="w-full h-full object-contain p-1.5"
 				/>
 			) : (
 				<span className="text-sm font-semibold text-gray-400 select-none">

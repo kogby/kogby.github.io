@@ -58,9 +58,6 @@ export const projects = career.projects.map((p) => ({
   region: regionOf(p.domains),
 }));
 
-export type SkillCategory = { category: string; items: string[] };
-export const skills: SkillCategory[] = career.skills;
-
 // Coursework grouped into themes, ordered by importance. Website-only (not in
 // the resume-facing career.json). Each course carries its school so CMU slots
 // in later by adding entries.
