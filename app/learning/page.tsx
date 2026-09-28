@@ -9,17 +9,12 @@ export const metadata: Metadata = { title: "Learning | kogby" };
 export default function LearningPage() {
   return (
     <>
-      <section className="pt-20 pb-16 md:pt-28">
-        <Container>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-tight mb-6">
-            I&apos;m a broad learner.
-          </h1>
-          <p className="text-xl text-gray-600 leading-relaxed max-w-2xl">
-            Systems, machine learning, data, and the occasional book on how to think. This is what
-            I&apos;ve studied, and what I&apos;m reading now.
-          </p>
-        </Container>
-      </section>
+      <Container className="pt-12 pb-12">
+        <p className="text-lg text-gray-600 leading-relaxed max-w-2xl">
+          I&apos;m a broad learner: systems, machine learning, data, and the occasional book on how to
+          think. This is what I&apos;ve studied, and what I&apos;m reading now.
+        </p>
+      </Container>
       <Education />
       <Studying />
       <CourseworkList />
