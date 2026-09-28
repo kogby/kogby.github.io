@@ -1,8 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
-import Container from "./ui/Container";
 import { experiences, projects } from "@/lib/data";
 import { REGIONS, type Region } from "@/lib/venn";
 
@@ -92,18 +90,7 @@ export default function VennMap() {
 	};
 
 	return (
-		<section id="map" className="py-20 border-t border-gray-200">
-			<Container>
-				<motion.div
-					initial={{ opacity: 0, x: -20 }}
-					whileInView={{ opacity: 1, x: 0 }}
-					viewport={{ once: true }}
-					className="mb-10"
-				>
-					<h2 className="text-3xl font-bold tracking-tight mb-4">Systems × ML</h2>
-					<div className="h-1 w-20 bg-black"></div>
-				</motion.div>
-
+		<div>
 				<svg
 					viewBox="110 40 580 410"
 					className="-mx-6 w-[calc(100%+3rem)] max-w-none sm:mx-auto sm:w-full sm:max-w-2xl h-auto select-none"
@@ -198,7 +185,6 @@ export default function VennMap() {
 						: "Hover a dot to see what it is. Click to jump to it."}
 				</p>
 				<p className="mt-1 text-center text-xs text-gray-400">● project&nbsp;&nbsp;&nbsp;○ experience</p>
-			</Container>
-		</section>
+		</div>
 	);
 }

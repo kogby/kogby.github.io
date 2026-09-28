@@ -7,7 +7,7 @@ import SocialLinks from "./SocialLinks";
 
 export default function Hero() {
 	return (
-		<section id="about" className="pt-20 pb-20 md:pt-32 md:pb-28">
+		<section id="home" className="pt-20 pb-20 md:pt-32 md:pb-28">
 			<Container>
 				<div className="max-w-3xl space-y-8">
 					<motion.h1
@@ -55,7 +55,7 @@ export default function Hero() {
 						className="pt-8 flex gap-4"
 					>
 						<Link
-							href="#map"
+							href="#experience"
 							className="px-6 py-3 bg-black text-white font-medium rounded-full hover:bg-gray-800 transition-colors hover:scale-105 active:scale-95 duration-200"
 						>
 							View Work

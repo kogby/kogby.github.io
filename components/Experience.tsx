@@ -9,11 +9,9 @@ import CompanyLogo from "./ui/CompanyLogo";
 import SlideToggle from "./ui/SlideToggle";
 import { experiences } from "@/lib/data";
 
-const TABS = ["Work", "Research"] as const;
+const TABS = ["Work", "Research", "Leadership"] as const;
 type Tab = (typeof TABS)[number];
 
-const timeline = experiences.filter((e) => e.category !== "Leadership");
-const leadership = experiences.filter((e) => e.category === "Leadership");
 
 export default function Experience() {
 	const [tab, setTab] = useState<Tab>("Work");
@@ -21,7 +19,7 @@ export default function Experience() {
 	// The venn map fires "venn:reveal" before jumping; switch tabs synchronously so the target exists.
 	useEffect(() => {
 		const onReveal = (e: Event) => {
-			const exp = timeline.find((x) => `exp-${x.slug}` === (e as CustomEvent<string>).detail);
+			const exp = experiences.find((x) => `exp-${x.slug}` === (e as CustomEvent<string>).detail);
 			if (exp) flushSync(() => setTab(exp.category as Tab));
 		};
 		window.addEventListener("venn:reveal", onReveal);
@@ -41,7 +39,7 @@ export default function Experience() {
 				</div>
 
 				<motion.div key={tab} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-12">
-					{timeline.filter((e) => e.category === tab).map((exp) => (
+					{experiences.filter((e) => e.category === tab).map((exp) => (
 						<motion.div
 							key={exp.id}
 							id={`exp-${exp.slug}`}
@@ -85,23 +83,6 @@ export default function Experience() {
 						</motion.div>
 					))}
 				</motion.div>
-
-				<h3 className="mt-16 mb-6 text-sm font-mono uppercase tracking-widest text-gray-500">Leadership</h3>
-				<ul className="space-y-4">
-					{leadership.map((exp) => (
-						<li
-							key={exp.id}
-							id={`exp-${exp.slug}`}
-							tabIndex={-1}
-							className="group flex flex-wrap items-center gap-x-3 gap-y-1 text-sm"
-						>
-							<CompanyLogo src={exp.logoUrl} name={exp.company} size="w-8 h-8" />
-							<span className="font-medium text-black">{exp.company}</span>
-							<span className="text-gray-500">· {exp.role}</span>
-							<span className="ml-auto font-mono text-xs text-gray-400">{exp.period}</span>
-						</li>
-					))}
-				</ul>
 			</Container>
 		</section>
 	);
