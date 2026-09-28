@@ -54,3 +54,15 @@ body {
 section[id] {
   scroll-margin-top: 5rem;
 }
+
+/* Venn-map jump target: violet outline fades after the smooth scroll lands. */
+@keyframes flash {
+  from { outline-color: var(--accent-primary); }
+  to { outline-color: transparent; }
+}
+.flash {
+  outline: 2px solid transparent;
+  outline-offset: 6px;
+  border-radius: 0.75rem;
+  animation: flash 1.2s ease-out 0.4s backwards;
+}

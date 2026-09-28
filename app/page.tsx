@@ -1,5 +1,6 @@
 import Hero from "@/components/Hero";
 import Bio from "@/components/Bio";
+import VennMap from "@/components/VennMap";
 import Experience from "@/components/Experience";
 import ProjectList from "@/components/ProjectList";
 import Skills from "@/components/Skills";
@@ -12,6 +13,7 @@ export default function Home() {
     <>
       <Hero />
       <Bio />
+      <VennMap />
       <Experience />
       <ProjectList />
       <Skills />
