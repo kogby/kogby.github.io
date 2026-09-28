@@ -117,4 +117,36 @@ export const studyingNow = [
 
     link: "https://15445.courses.cs.cmu.edu/",
   },
+  {
+    id: 3,
+    title: "The Almanack of Naval Ravikant",
+    type: "book" as const,
+    author: "Eric Jorgenson",
+    imageUrl: "/studying/naval.jpg",
+    link: "https://www.navalmanack.com/",
+  },
+];
+
+// Website-only; mirrors the Education section of career-ops/cv.md.
+export const education = [
+  {
+    id: "cmu",
+    school: "Carnegie Mellon University",
+    unit: "School of Computer Science",
+    degree: "Master of Computational Data Science",
+    period: "Expected Dec 2026",
+    gpa: "3.88 / 4.00",
+    logoUrl: "/logos/cmu.png",
+    courses: ["LLM Systems", "Machine Learning Systems", "Distributed Systems", "Computer Systems", "Machine Learning", "Cloud Computing", "Generative AI"],
+  },
+  {
+    id: "ntu",
+    school: "National Taiwan University",
+    unit: "",
+    degree: "Bachelor of Information Management",
+    period: "Sep 2020 - Jun 2024",
+    gpa: "3.98 / 4.3",
+    logoUrl: "/logos/ntu.png",
+    courses: [],
+  },
 ];

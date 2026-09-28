@@ -32,7 +32,7 @@ export default function Studying() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="group flex gap-5 p-5 border border-gray-200 rounded-xl hover:border-black/20 hover:shadow-lg transition-all duration-300"
+              className="group flex gap-5 p-5 bg-white border border-gray-200 rounded-xl hover:border-black/20 hover:shadow-lg transition-all duration-300"
             >
               {/* Book / Course thumbnail */}
               <div className="w-20 h-28 flex-shrink-0 bg-gray-100 rounded-lg overflow-hidden flex items-center justify-center border border-gray-100">
