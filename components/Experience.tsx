@@ -38,7 +38,7 @@ export default function Experience() {
 					<SlideToggle id="experienceTab" options={TABS.map((t) => ({ value: t, label: t }))} value={tab} onChange={setTab} />
 				</div>
 
-				<motion.div key={tab} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-12">
+				<motion.div key={tab} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
 					{experiences.filter((e) => e.category === tab).map((exp) => (
 						<motion.div
 							key={exp.id}
@@ -47,7 +47,7 @@ export default function Experience() {
 							initial={{ opacity: 0, y: 20 }}
 							whileInView={{ opacity: 1, y: 0 }}
 							viewport={{ once: true }}
-							className="group grid grid-cols-[1fr] md:grid-cols-[190px_60px_1fr] gap-4 md:gap-8 border-b border-gray-100 pb-8 last:border-0"
+							className="group grid grid-cols-[1fr] md:grid-cols-[170px_48px_1fr] gap-4 md:gap-6 bg-white p-6 md:p-8 border border-gray-200 hover:border-black/20 hover:shadow-xl transition-all duration-300 rounded-xl"
 						>
 							<div className="md:text-right">
 								<p className="text-sm font-medium text-gray-500 font-mono tracking-tight whitespace-nowrap">{exp.period}</p>
