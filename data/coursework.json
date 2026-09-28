@@ -30,11 +30,6 @@
           "name": "Parallel Computer Architecture and Programming"
         },
         {
-          "school": "CMU",
-          "code": "15-712",
-          "name": "Advanced Operating Systems and Distributed Systems"
-        },
-        {
           "school": "NTU",
           "code": "IM5072",
           "name": "Cloud Native Application Development"

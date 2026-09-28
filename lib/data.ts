@@ -140,7 +140,6 @@ export const education = [
       "LLM Systems",
       "Machine Learning Systems",
       "Distributed Systems",
-      "Advanced Operating Systems and Distributed Systems",
       "Parallel Computer Architecture and Programming",
       "Computer Systems",
       "Cloud Computing",

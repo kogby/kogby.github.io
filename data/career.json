@@ -18,14 +18,16 @@
       "slug": "amazon-swe",
       "role": "Software Engineer Intern",
       "org": "Amazon",
-      "period": "May 2026 - Present",
+      "period": "May 2026 - Aug 2026",
       "category": "Work",
       "domains": ["backend", "distributed", "mlinfra"],
       "tech": ["AWS", "Serverless", "Event-Driven", "LLM"],
       "summary": "Architected a distributed, event-driven serverless system on AWS with an LLM oncall agent.",
       "bullets": [
-        { "text": "Designed an override mechanism that prevents a failure capable of $1.1M+ revenue loss under 100M+ record traffic spikes", "tags": ["backend", "reliability"], "priority": "high" },
-        { "text": "Architected a distributed, event-driven serverless system on AWS with a self-healing mechanism maintaining eventual consistency at a 5-minute SLA; integrated an LLM oncall agent with full audit traceability", "tags": ["distributed", "mlinfra"], "priority": "high" }
+        { "text": "Designed a priority fast-path routing mechanism in an event-driven system processing 100M+ records, cutting critical-action latency from hours to a 5-minute SLA by diverting priority traffic around backlogs tied to $1.1M+ in lost sales.", "tags": ["distributed", "reliability"], "priority": "high" },
+        { "text": "Architected a serverless control plane with DynamoDB Streams and SQS to eliminate write races between real-time manual actions and background ML inferences, enabling self-healing state reconciliation and eventual consistency.", "tags": ["distributed", "mlinfra"], "priority": "high" },
+        { "text": "Slashed 99% DB query traffic with a stateful, domain-agnostic schema, enabling service expansions at zero marginal cost.", "tags": ["backend", "perf"], "priority": "high" },
+        { "text": "Integrated an LLM oncall agent that validates and executes actions with full audit traceability, driving 100% team adoption.", "tags": ["mlinfra"], "priority": "high" }
       ],
       "logoUrl": "/logos/amazon.png"
     },
@@ -40,10 +42,11 @@
       "tech": ["Java", "Kafka", "OpenTelemetry", "Grafana", "Prometheus", "PySpark", "Airflow"],
       "summary": "Built 20+ Java backend services for a commerce platform with 21M+ daily users.",
       "bullets": [
-        { "text": "Built 20+ Java backend services and async jobs for a commerce platform serving 21M+ daily users on Taiwan's top social app", "tags": ["backend"], "priority": "high" },
-        { "text": "Solved a critical end-to-end tracing gap with custom OpenTelemetry instrumentation for a customized Kafka client", "tags": ["distributed", "observability"], "priority": "high" },
-        { "text": "Built real-time microservice monitoring dashboards with Grafana and Prometheus for proactive alerting", "tags": ["observability"], "priority": "medium" },
-        { "text": "Delivered a production-ready PySpark/Airflow ETL pipeline ingesting TBs of data for precise marketing", "tags": ["de"], "priority": "medium" }
+        { "text": "Shipped 20+ Java services & async jobs for a distributed platform with 21M+ daily users on Taiwan's top social app.", "tags": ["backend", "distributed"], "priority": "high" },
+        { "text": "Solved a critical end-to-end tracing gap by writing custom OpenTelemetry instrumentation for a customized Kafka client.", "tags": ["backend", "observability"], "priority": "high" },
+        { "text": "Built real-time microservice monitoring dashboards with Grafana and Prometheus for proactive alerting across the system.", "tags": ["backend", "observability"], "priority": "high" },
+        { "text": "Designed a PySpark/Airflow ETL pipeline ingesting TBs of user-behavior data for downstream marketing analytics.", "tags": ["de"], "priority": "high" },
+        { "text": "Presented a public tech talk on backend architecture, covering data pipelines and OLTP/OLAP systems, to 100+ attendees.", "tags": ["backend"], "priority": "high" }
       ],
       "logoUrl": "/logos/line.png"
     },
@@ -58,8 +61,8 @@
       "tech": ["Python", "Autoencoder", "NumPy", "Parquet"],
       "summary": "Revamped Autoencoder-based anomaly detection and optimized turbulence data pipelines.",
       "bullets": [
-        { "text": "Revamped the Autoencoder-based anomaly detection system for multi-event analysis, providing clearer pilot guidance", "tags": ["mle", "ds"], "priority": "high" },
-        { "text": "Overhauled turbulence data interpolation, shortening the model iteration cycle by 50% and achieving an 83% speedup by resolving CPU/I/O bottlenecks with vectorized computation and Parquet format", "tags": ["de", "perf"], "priority": "high" }
+        { "text": "Revamped the Autoencoder-based anomaly detection system for multi-event analysis, providing clearer pilot guidance.", "tags": ["mle"], "priority": "high" },
+        { "text": "Spearheaded a performance overhaul of the turbulence data interpolation that shortened the model iteration cycle by 50%, achieving an 83% speedup by resolving CPU/I/O bottlenecks with vectorized computations and Parquet format.", "tags": ["mle", "perf"], "priority": "high" }
       ],
       "logoUrl": "/logos/evaair.png"
     },
@@ -74,8 +77,8 @@
       "tech": ["Jenkins", "CI/CD"],
       "summary": "Cut deployment time by 67% with a unified Jenkins pipeline.",
       "bullets": [
-        { "text": "Cut deployment time by 67% with a unified Jenkins pipeline that automated release workflows for two cross-OS teams", "tags": ["devops", "backend"], "priority": "high" },
-        { "text": "Owned the end-to-end solution and scaled to 18+ platform modules, earning a 4.73/5 manager rating (Top 5% of interns)", "tags": ["ownership"], "priority": "high" }
+        { "text": "Cut deployment time by 67% with a unified CI/CD pipeline that automated release workflows for two cross-OS teams.", "tags": ["backend", "devops"], "priority": "high" },
+        { "text": "Owned the end-to-end solution and scaled to 18+ platform modules, earning a 4.73/5 manager rating (Top 5% of interns).", "tags": ["backend"], "priority": "high" }
       ],
       "logoUrl": "/logos/trendmicro.png"
     },
@@ -90,8 +93,8 @@
       "tech": ["Python", "PaddleOCR", "NER"],
       "summary": "Reduced hospital processing time by 68% via an OCR & NER pipeline.",
       "bullets": [
-        { "text": "Reduced hospital document processing time by 68% via an OCR & NER pipeline", "tags": ["ds", "mle"], "priority": "high" },
-        { "text": "Boosted PaddleOCR model accuracy from 75% to 84% with data augmentation", "tags": ["mle", "ds"], "priority": "high" }
+        { "text": "Reduced hospital processing time by 68% by automating verification for millions of receipts via an OCR & NER pipeline.", "tags": ["ds", "mle"], "priority": "high" },
+        { "text": "Boosted handwritten Chinese word accuracy of paddleOCR model from 75% to 84% with data augmentation.", "tags": ["mle"], "priority": "high" }
       ],
       "logoUrl": "/logos/cathay.png"
     },
