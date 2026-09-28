@@ -1,3 +1,28 @@
+# kogby.github.io
+
+Personal site plus the job-search workspace around it. One repo, everything clones together:
+
+```text
+kogby.github.io (public, this repo)  — Next.js site
+├── data/career.json                 — structured content the site renders (domains, tags, bullets)
+├── resume-swe/    (private submodule) — LaTeX resume; main = base, tailor/<target> = per-application variants
+└── career-ops/    (private submodule) — job-search pipeline (scan, score, track); cv.md lives here
+```
+
+## Source of truth
+
+`career-ops/cv.md` is the superset of all career facts (every experience, project, and number ever shipped on a resume). Everything else is a curated subset rendered from it:
+
+```text
+career-ops/cv.md          (fact superset, private)
+├──> resume-swe branches  (one-page renderings for applications)
+└──> data/career.json     (public subset the website displays)
+```
+
+**Update order:** new facts go into `cv.md` first, then get selected into `career.json` (public display) and `resume-swe` (applications). Never edit only a downstream copy, or the superset drifts. No claim ships on a resume or the site unless it is backed by `cv.md`.
+
+---
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started

@@ -1,3 +1,6 @@
 [submodule "resume-swe"]
 	path = resume-swe
 	url = https://github.com/kogby/Resume-SWE
+[submodule "career-ops"]
+	path = career-ops
+	url = https://github.com/kogby/career-ops

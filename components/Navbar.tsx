@@ -3,21 +3,23 @@ import Container from "./ui/Container";
 
 export default function Navbar() {
 	const navLinks = [
-		// { name: "Studying", href: "/studying" }, // 先註解，之後再開
 		{ name: "Experience", href: "/experience" },
 		{ name: "Projects", href: "/projects" },
+		{ name: "Skills", href: "/skills" },
+		{ name: "Studying", href: "/studying" },
 		{ name: "Life List", href: "/life" },
 		{ name: "Contact", href: "/contact" },
 	];
 
 	return (
 		<nav className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
-			<Container className="flex items-center justify-between h-16">
+			<Container className="flex items-center justify-between gap-4 h-16">
 				<Link href="/" className="text-lg font-bold tracking-tight hover:text-gray-600 transition-colors">
 					kogby
 				</Link>
 
-				<div className="flex gap-6 sm:gap-8">
+				{/* ponytail: horizontally scrollable on small screens; hamburger if links grow */}
+				<div className="flex gap-5 sm:gap-8 overflow-x-auto whitespace-nowrap">
 					{navLinks.map((link) => (
 						<Link
 							key={link.name}

@@ -7,21 +7,21 @@ import SocialLinks from "./SocialLinks";
 
 export default function Hero() {
 	return (
-		<section id="home" className="pt-20 pb-32 md:pt-32 md:pb-48">
+		<section id="home" className="pt-20 pb-20 md:pt-32 md:pb-28">
 			<Container>
 				<div className="max-w-3xl space-y-8">
 					<motion.h1
 						initial={{ opacity: 0, y: 20 }}
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ duration: 0.5 }}
-						className="text-5xl md:text-7xl font-bold tracking-tight text-foreground leading-tight"
+						className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight text-foreground leading-tight"
 					>
-						Turning ambiguity into <br />
+						Turning ambiguity into{" "}
 						<motion.span
 							initial={{ opacity: 0 }}
 							animate={{ opacity: 1 }}
 							transition={{ delay: 0.3, duration: 0.5 }}
-							className="text-gray-400"
+							className="block text-gray-400"
 						>
 							scalable systems.
 						</motion.span>

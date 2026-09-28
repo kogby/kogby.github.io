@@ -73,6 +73,13 @@ export default function LifeList() {
 					>
 						things i want to do before i go ✦
 					</p>
+					<p
+						className="text-lg text-gray-500 mt-1"
+						style={{ fontFamily: "var(--font-handwriting)" }}
+					>
+						{lifeList.filter((i) => i.done).length} done · {lifeList.length} written ·{" "}
+						{100 - lifeList.length} still to dream up
+					</p>
 					<div className="h-1 w-20 bg-black/70 mt-4 rounded-full"></div>
 				</motion.div>
 

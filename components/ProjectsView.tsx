@@ -5,12 +5,14 @@ import { motion } from "framer-motion";
 import Container from "./ui/Container";
 import ConstellationGraph from "./ConstellationGraph";
 import ProjectList from "./ProjectList";
+import CourseworkList from "./CourseworkList";
 
-type View = "cards" | "graph";
+type View = "cards" | "graph" | "coursework";
 
 const TABS: { id: View; label: string }[] = [
 	{ id: "cards", label: "Cards" },
 	{ id: "graph", label: "Constellation" },
+	{ id: "coursework", label: "Coursework" },
 ];
 
 export default function ProjectsView() {
@@ -45,7 +47,9 @@ export default function ProjectsView() {
 				</div>
 			</Container>
 
-			{view === "cards" ? <ProjectList /> : <ConstellationGraph />}
+			{view === "cards" && <ProjectList />}
+			{view === "graph" && <ConstellationGraph />}
+			{view === "coursework" && <CourseworkList />}
 		</>
 	);
 }

@@ -24,6 +24,9 @@
 .DS_Store
 *.pem
 
+# claude local config + worktrees (never track — machine-specific paths; leaked worktree gitlinks break VSCode git)
+.claude/
+
 # debug
 npm-debug.log*
 yarn-debug.log*

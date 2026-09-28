@@ -1,4 +1,5 @@
 import career from "@/data/career.json";
+import courseworkData from "@/data/coursework.json";
 
 // ── Central source of truth ──────────────────────────────────────────────
 // data/career.json is the single source of truth, shared by this website and
@@ -42,7 +43,14 @@ export const projects = career.projects.map((p) => ({
   metrics: p.metrics,
 }));
 
-export const skills = career.skills;
+export type SkillCategory = { category: string; items: string[] };
+export const skills: SkillCategory[] = career.skills;
+
+// Coursework grouped into themes, ordered by importance. Website-only (not in
+// the resume-facing career.json). Each course carries its school so CMU slots
+// in later by adding entries.
+export type CourseworkTheme = (typeof courseworkData.coursework)[number];
+export const coursework = courseworkData.coursework;
 
 export type LifeListItem = {
   id: number;
@@ -71,7 +79,8 @@ export const studyingNow = [
     title: "Designing Data-Intensive Applications",
     type: "book" as const,
     author: "Martin Kleppmann",
-    imageUrl: "/studying/ddia.jpg",
+    imageUrl: "", // drop in /public/studying/ddia.jpg to show a cover
+
     link: "https://dataintensive.net/",
   },
   {
@@ -79,7 +88,8 @@ export const studyingNow = [
     title: "CMU 15-445: Database Systems",
     type: "course" as const,
     author: "Andy Pavlo",
-    imageUrl: "/studying/cmu15445.jpg",
+    imageUrl: "", // drop in /public/studying/cmu15445.jpg to show a thumbnail
+
     link: "https://15445.courses.cs.cmu.edu/",
   },
 ];
