@@ -18,6 +18,11 @@ export default function Bio() {
 						focused on distributed systems and ML infrastructure.
 					</p>
 					<p>
+						Recent work spans LLM inference serving, distributed systems, and cloud infrastructure.
+						Currently researching production-scale job scheduling with the{" "}
+						<span className="font-semibold text-black">CMU Parallel Data Lab</span> in collaboration with Uber.
+					</p>
+					<p>
 						Previously: backend engineer at <span className="font-semibold text-black">LINE</span> (21M+ DAU commerce platform),
 						ML engineer at <span className="font-semibold text-black">EVA Air</span>,
 						and president of the <span className="font-semibold text-black">NTU Data Analytics Club</span>.

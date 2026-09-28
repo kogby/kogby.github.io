@@ -7,7 +7,7 @@ import SocialLinks from "./SocialLinks";
 
 export default function Hero() {
 	return (
-		<section id="home" className="pt-20 pb-20 md:pt-32 md:pb-28">
+		<section id="about" className="pt-20 pb-20 md:pt-32 md:pb-28">
 			<Container>
 				<div className="max-w-3xl space-y-8">
 					<motion.h1
@@ -33,23 +33,10 @@ export default function Hero() {
 						transition={{ delay: 0.4, duration: 0.5 }}
 						className="text-xl md:text-2xl text-gray-600 leading-relaxed max-w-2xl"
 					>
-						Hi, I'm <span className="text-black font-semibold">Jerry Chen</span>.
+						Hi, I&apos;m <span className="text-black font-semibold">Jerry Chen</span>.
 						I focus on translating ambiguous requirements into concrete
 						architectures, providing large-scale, data-intensive AI/ML system
 						solutions.
-					</motion.p>
-
-					<motion.p
-						initial={{ opacity: 0, y: 20 }}
-						animate={{ opacity: 1, y: 0 }}
-						transition={{ delay: 0.55, duration: 0.5 }}
-						className="text-base md:text-lg text-gray-500 leading-relaxed max-w-2xl"
-					>
-						Recent work spans LLM inference serving, distributed systems, and
-						cloud infrastructure. Currently researching production-scale job
-						scheduling with the{" "}
-						<span className="text-gray-700 font-medium">CMU Parallel Data Lab</span>{" "}
-						in collaboration with Uber.
 					</motion.p>
 
 					<motion.p
@@ -69,13 +56,13 @@ export default function Hero() {
 						className="pt-8 flex gap-4"
 					>
 						<Link
-							href="/projects"
+							href="#map"
 							className="px-6 py-3 bg-black text-white font-medium rounded-full hover:bg-gray-800 transition-colors hover:scale-105 active:scale-95 duration-200"
 						>
 							View Work
 						</Link>
 						<Link
-							href="/contact"
+							href="#contact"
 							className="px-6 py-3 border border-gray-200 text-gray-600 font-medium rounded-full hover:border-black hover:text-black transition-colors hover:scale-105 active:scale-95 duration-200"
 						>
 							Contact Me

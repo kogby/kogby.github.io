@@ -121,18 +121,3 @@ export const studyingNow = [
     link: "https://15445.courses.cs.cmu.edu/",
   },
 ];
-
-// Domain categories for the constellation graph
-export const domains = career.domains;
-
-// Projects with domain tags for constellation mapping
-export const projectsWithDomains = career.projects.map((p) => ({
-  id: p.id,
-  title: p.title,
-  summary: p.summary,
-  tags: p.tech,
-  domains: p.domains,
-  description: p.bullets.map((b) => b.text).join(" "),
-  link: p.link,
-  metrics: p.metrics,
-}));

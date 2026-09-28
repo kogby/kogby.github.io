@@ -49,3 +49,8 @@ body {
   width: 0px;
   background: transparent;
 }
+
+/* Keep anchored sections clear of the fixed nav. */
+section[id] {
+  scroll-margin-top: 5rem;
+}
