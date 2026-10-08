@@ -3,7 +3,7 @@ import SocialLinks from "./SocialLinks";
 
 export default function Contact() {
 	return (
-		<section id="contact" className="py-24 border-t border-gray-50">
+		<section id="contact" className="py-24">
 			<Container className="text-center">
 				<h2 className="text-3xl font-bold tracking-tight mb-8">Get in Touch</h2>
 				<a

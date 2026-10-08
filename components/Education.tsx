@@ -7,7 +7,7 @@ import { education } from "@/lib/data";
 
 export default function Education() {
 	return (
-		<section id="education" className="py-20 border-t border-gray-200">
+		<section id="education" className="py-20">
 			<Container>
 				<motion.div
 					initial={{ opacity: 0, x: -20 }}

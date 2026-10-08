@@ -6,7 +6,7 @@ import VennMap from "./VennMap";
 
 export default function About() {
 	return (
-		<section id="about" className="py-20 border-t border-gray-200">
+		<section id="about" className="py-20">
 			<Container>
 				<motion.div
 					initial={{ opacity: 0, x: -20 }}

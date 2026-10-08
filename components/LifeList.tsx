@@ -8,7 +8,7 @@ export default function LifeList() {
 	return (
 		<section
 			id="life"
-			className="relative py-24 border-t border-gray-50 overflow-hidden"
+			className="relative py-24 overflow-hidden"
 		>
 			{/* Drifting gradient blobs — only visible in this section */}
 			<div className="pointer-events-none absolute inset-0 -z-10">

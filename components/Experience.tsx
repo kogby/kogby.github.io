@@ -27,7 +27,7 @@ export default function Experience() {
 	}, []);
 
 	return (
-		<section id="experience" className="py-20 border-t border-gray-200">
+		<section id="experience" className="py-20">
 			<Container>
 				<div className="mb-16 flex flex-wrap items-end justify-between gap-6">
 					<motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
@@ -47,7 +47,7 @@ export default function Experience() {
 							initial={{ opacity: 0, y: 20 }}
 							whileInView={{ opacity: 1, y: 0 }}
 							viewport={{ once: true }}
-							className="group grid grid-cols-[1fr] md:grid-cols-[170px_48px_1fr] gap-4 md:gap-6 bg-white p-6 md:p-8 border border-gray-200 hover:border-black/20 hover:shadow-xl transition-all duration-300 rounded-xl"
+							className="group grid grid-cols-[1fr] md:grid-cols-[170px_48px_1fr] gap-4 md:gap-6 p-6 md:p-8 border border-gray-200 hover:border-black/20 hover:shadow-xl transition-all duration-300 rounded-xl"
 						>
 							<div className="md:text-right">
 								<p className="text-sm font-medium text-gray-500 font-mono tracking-tight whitespace-nowrap">{exp.period}</p>

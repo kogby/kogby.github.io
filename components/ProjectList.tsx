@@ -37,7 +37,7 @@ export default function ProjectList() {
 	}, []);
 
 	return (
-		<section id="projects" className="py-20 border-t border-gray-200">
+		<section id="projects" className="py-20">
 			<Container>
 				<div className="mb-12 flex flex-wrap items-end justify-between gap-6">
 					<motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
@@ -66,7 +66,7 @@ export default function ProjectList() {
 												initial={{ opacity: 0, y: 20 }}
 												whileInView={{ opacity: 1, y: 0 }}
 												viewport={{ once: true }}
-												className="group bg-white p-8 border border-gray-200 hover:border-black/20 hover:shadow-xl transition-all duration-300 rounded-xl"
+												className="group p-8 border border-gray-200 hover:border-black/20 hover:shadow-xl transition-all duration-300 rounded-xl"
 											>
 												<div className="flex justify-between items-start mb-4">
 													<h3 className="text-xl font-bold group-hover:text-blue-700 transition-colors">
