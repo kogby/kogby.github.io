@@ -1,10 +1,7 @@
-import type { Metadata } from "next";
 import Container from "@/components/ui/Container";
 import Education from "@/components/Education";
 import Studying from "@/components/Studying";
 import CourseworkList from "@/components/CourseworkList";
-
-export const metadata: Metadata = { title: "Learning | kogby" };
 
 export default function LearningPage() {
   return (

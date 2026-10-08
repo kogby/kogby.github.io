@@ -7,7 +7,7 @@ import { coursework } from "@/lib/data";
 // Theme title + its courses (CMU and NTU, with course numbers); no theme descriptions.
 export default function CourseworkList() {
 	return (
-		<section id="coursework" className="py-20 border-t border-gray-200">
+		<section id="coursework" className="py-20">
 			<Container>
 				<motion.div
 					initial={{ opacity: 0, x: -20 }}

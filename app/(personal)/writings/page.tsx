@@ -1,8 +1,5 @@
-import type { Metadata } from "next";
 import Container from "@/components/ui/Container";
 import { writings, writingProfiles } from "@/lib/data";
-
-export const metadata: Metadata = { title: "Writings | kogby" };
 
 const hand = { fontFamily: "var(--font-handwriting)" };
 

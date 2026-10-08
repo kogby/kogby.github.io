@@ -3,14 +3,14 @@ import { Inter, Caveat } from "next/font/google";
 import Script from "next/script";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import GridBackground from "@/components/GridBackground";
+import InkWall from "@/components/InkWall";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const caveat = Caveat({ subsets: ["latin"], variable: "--font-caveat" });
 
 export const metadata: Metadata = {
-  title: "Jerry Chen (kogby) | ML Infra & Backend Engineer",
+  title: "Jerry Chen",
   description:
     "Jerry Chen — CMU MS student working on LLM inference serving, distributed systems, and cloud infrastructure. Open to AI/Cloud Infra SWE or MLE roles.",
   openGraph: {
@@ -31,7 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${caveat.variable} scroll-smooth motion-reduce:scroll-auto`}>
       <body className="antialiased min-h-screen flex flex-col">
-        <GridBackground />
+        <InkWall />
         <Navbar />
         <main className="flex-grow pt-20">
           {children}

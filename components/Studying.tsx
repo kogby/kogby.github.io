@@ -9,7 +9,7 @@ export default function Studying() {
   const [failed, setFailed] = useState<Record<number, boolean>>({});
 
   return (
-    <section id="studying" className="py-20 border-t border-gray-50">
+    <section id="studying" className="py-20">
       <Container>
         <motion.div
           initial={{ opacity: 0, x: -20 }}
